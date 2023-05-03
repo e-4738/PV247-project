@@ -25,7 +25,7 @@ const useSpotifyAuth = () => {
 			].join(' ');
 
 			await axios
-				.get('/spotify/authorize', {
+				.get('https://accounts.spotify.com/authorize', {
 					params: {
 						client_id: clientId,
 						response_type: 'code',
@@ -41,7 +41,7 @@ const useSpotifyAuth = () => {
 			const credentials = buf.toString('base64');
 
 			await axios
-				.post('/spotify/api/token', {
+				.post('https://accounts.spotify.com/api/token', {
 					headers: {
 						'Content-Type': ' application/x-www-form-urlencoded',
 						'Authorization': `Basic ${credentials}`
