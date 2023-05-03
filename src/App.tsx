@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-router';
 
 import { theme } from './theme';
-import Home from './components/Home';
+import Home from './pages/Home';
 
 const rootRoute = new RootRoute({
 	component: () => (
