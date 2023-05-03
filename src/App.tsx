@@ -61,7 +61,8 @@ const rootRoute = new RootRoute({
 						justifyContent: 'center',
 						alignItems: 'center',
 						flexGrow: 1,
-						gap: 2
+						p: 5,
+						gap: 4
 					}}
 				>
 					<Outlet />
