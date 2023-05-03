@@ -1,5 +1,12 @@
 import { ThemeProvider } from '@emotion/react';
-import { AppBar, Container, CssBaseline, Toolbar } from '@mui/material';
+import {
+	AppBar,
+	Box,
+	Button,
+	Container,
+	CssBaseline,
+	Toolbar
+} from '@mui/material';
 import {
 	Outlet,
 	RootRoute,
@@ -16,38 +23,48 @@ import LeaderBoard from './pages/LeaderBoard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
+import useLoggedInUser from './hooks/useLoggedInUser';
+import { signOut } from './firebase';
 
 const rootRoute = new RootRoute({
-	component: () => (
-		<>
-			<CssBaseline />
-			<AppBar sx={{ position: 'sticky' }}>
-				<Container maxWidth="sm">
-					<Toolbar variant="dense">
-						<ButtonLink to="/">Home</ButtonLink>
-						<ButtonLink to="/play">Play</ButtonLink>
-						<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
-						<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
-						<ButtonLink to="/login">Login</ButtonLink>
-					</Toolbar>
-				</Container>
-			</AppBar>
+	component: () => {
+		const user = useLoggedInUser();
+		return (
+			<>
+				<CssBaseline />
+				<AppBar sx={{ position: 'sticky' }}>
+					<Container maxWidth="sm">
+						<Toolbar variant="dense">
+							<ButtonLink to="/">Home</ButtonLink>
+							<ButtonLink to="/play">Play</ButtonLink>
+							<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
+							<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
+							<Box sx={{ flexGrow: 1 }} />
+							{!user ? (
+								<ButtonLink to="/login">LogIn</ButtonLink>
+							) : (
+								<Button onClick={signOut}>LogOut</Button>
+							)}
+						</Toolbar>
+					</Container>
+				</AppBar>
 
-			<Container
-				component="main"
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center',
-					flexGrow: 1,
-					gap: 2
-				}}
-			>
-				<Outlet />
-			</Container>
-		</>
-	)
+				<Container
+					component="main"
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexGrow: 1,
+						gap: 2
+					}}
+				>
+					<Outlet />
+				</Container>
+			</>
+		);
+	}
 });
 
 const indexRoute = new Route({

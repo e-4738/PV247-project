@@ -1,30 +1,30 @@
-// import {
-// 	createContext,
-// 	FC,
-// 	PropsWithChildren,
-// 	useContext,
-// 	useEffect,
-// 	useState
-// } from 'react';
-// import { User } from 'firebase/auth';
+import {
+	createContext,
+	FC,
+	PropsWithChildren,
+	useContext,
+	useEffect,
+	useState
+} from 'react';
+import { User } from 'firebase/auth';
 
-// import { onAuthChanged } from '../firebase';
+import { onAuthChanged } from '../firebase';
 
-// const UserContext = createContext<User | undefined>(undefined);
+const UserContext = createContext<User | undefined>(undefined);
 
-// export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
-// 	// Hold user info in state
-// 	const [user, setUser] = useState<User>();
+export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
+	// Hold user info in state
+	const [user, setUser] = useState<User>();
 
-// 	// Setup onAuthChanged once when component is mounted
-// 	useEffect(() => {
-// 		onAuthChanged(u => setUser(u ?? undefined));
-// 	}, []);
+	// Setup onAuthChanged once when component is mounted
+	useEffect(() => {
+		onAuthChanged(u => setUser(u ?? undefined));
+	}, []);
 
-// 	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-// };
+	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+};
 
-// // Hook providing logged in user information
-// const useLoggedInUser = () => useContext(UserContext);
+// Hook providing logged in user information
+const useLoggedInUser = () => useContext(UserContext);
 
-// export default useLoggedInUser;
+export default useLoggedInUser;
