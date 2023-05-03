@@ -21,17 +21,17 @@ const rootRoute = new RootRoute({
 	component: () => (
 		<>
 			<CssBaseline />
-				<AppBar sx={{ position: 'sticky' }}>
-					<Container maxWidth="sm">
-						<Toolbar disableGutters sx={{ gap: 2 }}>
-							<ButtonLink to="/">Home</ButtonLink>
-							<ButtonLink to="/play">Play</ButtonLink>
-							<ButtonLink to="/yourmatches">YourMatches</ButtonLink>
-							<ButtonLink to="/leaderboard">LeaderBoard</ButtonLink>
-							<ButtonLink to="/login">Login</ButtonLink>
-						</Toolbar>
-					</Container>
-				</AppBar>
+			<AppBar sx={{ position: 'sticky' }}>
+				<Container maxWidth="sm">
+					<Toolbar disableGutters sx={{ gap: 2 }}>
+						<ButtonLink to="/">Home</ButtonLink>
+						<ButtonLink to="/play">Play</ButtonLink>
+						<ButtonLink to="/yourmatches">YourMatches</ButtonLink>
+						<ButtonLink to="/leaderboard">LeaderBoard</ButtonLink>
+						<ButtonLink to="/login">Login</ButtonLink>
+					</Toolbar>
+				</Container>
+			</AppBar>
 
 			<Container
 				component="main"
