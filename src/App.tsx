@@ -23,11 +23,11 @@ const rootRoute = new RootRoute({
 			<CssBaseline />
 			<AppBar sx={{ position: 'sticky' }}>
 				<Container maxWidth="sm">
-					<Toolbar disableGutters sx={{ gap: 2 }}>
+					<Toolbar variant="dense">
 						<ButtonLink to="/">Home</ButtonLink>
 						<ButtonLink to="/play">Play</ButtonLink>
-						<ButtonLink to="/yourmatches">YourMatches</ButtonLink>
-						<ButtonLink to="/leaderboard">LeaderBoard</ButtonLink>
+						<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
+						<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
 						<ButtonLink to="/login">Login</ButtonLink>
 					</Toolbar>
 				</Container>

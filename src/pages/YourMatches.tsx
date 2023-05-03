@@ -4,9 +4,11 @@ import usePageTitle from '../hooks/usePageTitle';
 
 const YourMatches = () => {
 	usePageTitle('Your Matches');
-	<Typography variant="h1">
-		This is where the YourMatches page will be.
-	</Typography>;
+	return (
+		<Typography variant="h1">
+			This is where the YourMatches page will be.
+		</Typography>
+	);
 };
 
 export default YourMatches;
