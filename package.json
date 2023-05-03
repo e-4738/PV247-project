@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.8",
     "@mui/material": "^5.12.2",
     "@tanstack/react-router": "^0.0.1-beta.83",
+    "axios": "^1.4.0",
     "firebase": "^9.21.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
