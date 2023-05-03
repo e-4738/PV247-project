@@ -1,11 +1,4 @@
-import {
-	Button,
-	Paper,
-	Typography,
-	TextField,
-	Box,
-	Avatar
-} from '@mui/material';
+import { Button, Paper, Typography, TextField, Box } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 

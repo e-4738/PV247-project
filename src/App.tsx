@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import {
 	AppBar,
+	Avatar,
 	Box,
 	Button,
 	Container,
@@ -34,7 +35,7 @@ const rootRoute = new RootRoute({
 				<CssBaseline />
 				<AppBar sx={{ position: 'sticky' }}>
 					<Container maxWidth="sm">
-						<Toolbar variant="dense">
+						<Toolbar>
 							<ButtonLink to="/">Home</ButtonLink>
 							<ButtonLink to="/play">Play</ButtonLink>
 							<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
@@ -43,7 +44,10 @@ const rootRoute = new RootRoute({
 							{!user ? (
 								<ButtonLink to="/login">LogIn</ButtonLink>
 							) : (
-								<Button onClick={signOut}>LogOut</Button>
+								<>
+									<Avatar sx={{ width: 30, height: 30 }} src="taylor.jpg" />
+									<Button onClick={signOut}>LogOut</Button>
+								</>
 							)}
 						</Toolbar>
 					</Container>
