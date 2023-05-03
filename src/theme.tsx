@@ -5,6 +5,16 @@ export const theme = createTheme({
 		primary: { main: '#d65cf2' },
 		mode: 'dark'
 	},
+	typography: {
+		fontFamily: ['-apple-system', '"Inter"', 'Arial'].join(','),
+		h1: {
+			fontWeight: 600,
+			background:
+				'linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(72,191,166,1) 29%, rgba(255,181,22,1) 100%)',
+			WebkitBackgroundClip: 'text',
+			WebkitTextFillColor: 'transparent'
+		}
+	},
 	components: {
 		MuiCssBaseline: {
 			styleOverrides: {
