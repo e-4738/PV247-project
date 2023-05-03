@@ -1,6 +1,4 @@
-import { Buffer } from 'buffer';
-
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const useSpotifyAuth = () => {
@@ -12,7 +10,7 @@ const useSpotifyAuth = () => {
 	const redirectUri = 'http://localhost:5173';
 
 	// surely not completely right, also needs a server to run from
-	useMemo(() => {
+	useEffect(() => {
 		const getAuthCode = async () => {
 			const scope = [
 				'user-read-currently-playing',
@@ -37,8 +35,7 @@ const useSpotifyAuth = () => {
 		};
 
 		const getAccessToken = async () => {
-			const buf = Buffer.from(`${clientId}:${clientSecret}`, 'base64');
-			const credentials = buf.toString('base64');
+			const credentials = window.btoa(`${clientId}:${clientSecret}`);
 
 			await axios
 				.post('https://accounts.spotify.com/api/token', {
