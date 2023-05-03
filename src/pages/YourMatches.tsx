@@ -1,9 +1,12 @@
 import { Typography } from '@mui/material';
 
-const YourMatches = () => (
+import usePageTitle from '../hooks/usePageTitle';
+
+const YourMatches = () => {
+	usePageTitle('Your Matches');
 	<Typography variant="h1">
 		This is where the YourMatches page will be.
-	</Typography>
-);
+	</Typography>;
+};
 
 export default YourMatches;
