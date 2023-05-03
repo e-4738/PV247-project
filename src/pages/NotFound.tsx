@@ -1,7 +1,10 @@
 import { Typography } from '@mui/material';
 
-const NotFound = () => (
-	<Typography variant="h1">Nothing to see here. Sorry.</Typography>
-);
+import usePageTitle from '../hooks/usePageTitle';
+
+const NotFound = () => {
+	usePageTitle('Not Found');
+	return <Typography variant="h1">Nothing to see here. Sorry.</Typography>;
+};
 
 export default NotFound;
