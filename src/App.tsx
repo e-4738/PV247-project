@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { Container, CssBaseline } from '@mui/material';
+import { AppBar, Container, CssBaseline, Toolbar } from '@mui/material';
 import {
 	Outlet,
 	RootRoute,
@@ -10,11 +10,29 @@ import {
 
 import { theme } from './theme';
 import Home from './pages/Home';
+import YourMatches from './pages/YourMatches';
+import PlayQuiz from './pages/PlayQuiz';
+import LeaderBoard from './pages/LeaderBoard';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import ButtonLink from './components/ButtonLink';
 
 const rootRoute = new RootRoute({
 	component: () => (
 		<>
 			<CssBaseline />
+				<AppBar sx={{ position: 'sticky' }}>
+					<Container maxWidth="sm">
+						<Toolbar disableGutters sx={{ gap: 2 }}>
+							<ButtonLink to="/">Home</ButtonLink>
+							<ButtonLink to="/play">Play</ButtonLink>
+							<ButtonLink to="/yourmatches">YourMatches</ButtonLink>
+							<ButtonLink to="/leaderboard">LeaderBoard</ButtonLink>
+							<ButtonLink to="/login">Login</ButtonLink>
+						</Toolbar>
+					</Container>
+				</AppBar>
+
 			<Container
 				component="main"
 				sx={{
@@ -38,7 +56,44 @@ const indexRoute = new Route({
 	component: Home
 });
 
-const routeTree = rootRoute.addChildren([indexRoute]);
+const playRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/play',
+	component: PlayQuiz
+});
+
+const yourMatchesRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/yourmatches',
+	component: YourMatches
+});
+
+const leadeBoardRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/leaderboard',
+	component: LeaderBoard
+});
+
+const loginRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/login',
+	component: Login
+});
+
+const notFoundRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '*',
+	component: NotFound
+});
+
+const routeTree = rootRoute.addChildren([
+	indexRoute,
+	playRoute,
+	yourMatchesRoute,
+	leadeBoardRoute,
+	loginRoute,
+	notFoundRoute
+]);
 
 const router = new Router({ routeTree });
 
