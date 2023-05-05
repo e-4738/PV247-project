@@ -12,7 +12,8 @@ import {
 	CollectionReference,
 	doc,
 	DocumentReference,
-	getFirestore
+	getFirestore,
+	getDoc
 } from 'firebase/firestore';
 
 // Initialize Firebase
@@ -60,3 +61,11 @@ export const usersCollection = collection(
 
 export const userDocument = (mail: string) =>
 	doc(db, 'users', mail) as DocumentReference<SpotifyUser>;
+
+export const getRefreshToken = async (
+	mail: string
+): Promise<string | undefined> => {
+	const docSnap = await getDoc(userDocument(mail));
+
+	return docSnap.get('refreshToken');
+};
