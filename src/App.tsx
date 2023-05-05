@@ -24,7 +24,7 @@ import LeaderBoard from './pages/LeaderBoard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
-import useLoggedInUser from './hooks/useLoggedInUser';
+import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { signOut } from './firebase';
 
 const rootRoute = new RootRoute({
@@ -127,9 +127,11 @@ declare module '@tanstack/react-router' {
 }
 
 const App = () => (
-	<ThemeProvider theme={theme}>
-		<RouterProvider router={router} />
-	</ThemeProvider>
+	<UserProvider>
+		<ThemeProvider theme={theme}>
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	</UserProvider>
 );
 
 export default App;
