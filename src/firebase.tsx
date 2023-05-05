@@ -45,3 +45,18 @@ export const onAuthChanged = (callback: (u: User | null) => void) =>
 
 // Firestore
 const db = getFirestore();
+
+export type SpotifyUser = {
+	mail: string;
+	spotifyId: string;
+	accessToken: string;
+	refreshToken: string;
+};
+
+export const usersCollection = collection(
+	db,
+	'users'
+) as CollectionReference<SpotifyUser>;
+
+export const userDocument = (mail: string) =>
+	doc(db, 'users', mail) as DocumentReference<SpotifyUser>;
