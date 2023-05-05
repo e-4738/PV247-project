@@ -3,6 +3,9 @@ type AuthenticationResponse = {
 	refreshToken?: string;
 };
 
+const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
+const redirectUri = 'http://localhost:5173';
+
 export const generateRandomString = (length: number) => {
 	let text = '';
 	const possible =
@@ -45,6 +48,31 @@ export const getScopes = (): string =>
 		'user-library-read'
 	].join(' ');
 
+export const getSpotifyAuthorizationCode = () => {
+	const codeVerifier = generateRandomString(128);
+
+	generateCodeChallenge(codeVerifier).then(codeChallenge => {
+		const state = generateRandomString(16);
+		const scope = getScopes();
+
+		localStorage.setItem('code_verifier', codeVerifier);
+
+		const args = new URLSearchParams({
+			response_type: 'code',
+			client_id: clientId,
+			scope,
+			redirect_uri: redirectUri,
+			state,
+			code_challenge_method: 'S256',
+			code_challenge: codeChallenge
+		});
+
+		window.location = `https://accounts.spotify.com/authorize?${args}` as
+			| Location
+			| (string & Location);
+	});
+};
+
 const callTokenApi = async (
 	body: URLSearchParams
 ): Promise<AuthenticationResponse> => {
@@ -81,9 +109,6 @@ const callTokenApi = async (
 export const getAccessToken = async (
 	code: string
 ): Promise<AuthenticationResponse> => {
-	const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
-	const redirectUri = 'http://localhost:5173';
-
 	const codeVerifier = localStorage.getItem('code_verifier') ?? '';
 
 	const body = new URLSearchParams({
@@ -100,8 +125,6 @@ export const getAccessToken = async (
 export const getRefreshedToken = async (
 	refresh_token: string
 ): Promise<AuthenticationResponse> => {
-	const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
-
 	const body = new URLSearchParams({
 		grant_type: 'refresh_token',
 		client_id: clientId,
