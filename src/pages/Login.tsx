@@ -1,10 +1,15 @@
 import { Button, Paper, Typography, TextField, Box } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { setDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
-import { signIn, signUp } from '../firebase';
+import { getRefreshToken, signIn, signUp, userDocument } from '../firebase';
 import useField from '../hooks/useField';
+import {
+	getRefreshedToken,
+	getSpotifyAuthorizationCode
+} from '../utils/spotifyAuthorizationUtils';
 
 const Login = () => {
 	usePageTitle('Login');
@@ -25,10 +30,31 @@ const Login = () => {
 				onSubmit={async (e: FormEvent) => {
 					e.preventDefault();
 					try {
-						isSignUp
-							? await signUp(email.value, password.value)
-							: await signIn(email.value, password.value);
-						navigate({ to: '/' });
+						if (isSignUp) {
+							await signUp(email.value, password.value);
+							// since user is signing up, the auth code is needed first
+							await getSpotifyAuthorizationCode();
+						} else {
+							await signIn(email.value, password.value);
+
+							// get the refresh token from db
+							const refreshToken = await getRefreshToken(email.value);
+							if (refreshToken) {
+								const data = await getRefreshedToken(refreshToken);
+								console.log(`got token, token is ${data.accessToken}`);
+
+								await setDoc(
+									userDocument(email.value),
+									{
+										mail: email.value,
+										accessToken: data.accessToken,
+										refreshToken: data.refreshToken
+									},
+									{ merge: true }
+								);
+							}
+							navigate({ to: '/' });
+						}
 					} catch (err) {
 						setSubmitError(
 							(err as { message?: string })?.message ?? 'Unknown Error'

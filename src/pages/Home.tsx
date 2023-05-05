@@ -1,9 +1,48 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { setDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
+import { getAccessToken } from '../utils/spotifyAuthorizationUtils';
+import { userDocument } from '../firebase';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const Home = () => {
 	usePageTitle('Home');
+	const user = useLoggedInUser();
+
+	// quite possibly unneeded
+	const [accessToken, setAccessToken] = useState<string>();
+
+	const urlParams = new URLSearchParams(window.location.search);
+	const code = urlParams.get('code') ?? undefined;
+
+	//not the best place to do it, but at least it works
+	useEffect(() => {
+		const fetchData = async () => {
+			if (!code || !user?.email) {
+				return;
+			}
+
+			const data = await getAccessToken(code);
+
+			if (data.accessToken) {
+				setAccessToken(data.accessToken);
+				console.log(`got token, token is ${data.accessToken}`);
+				await setDoc(
+					userDocument(user.email),
+					{
+						mail: user.email,
+						accessToken: data.accessToken,
+						refreshToken: data.refreshToken
+					},
+					{ merge: true }
+				);
+			}
+		};
+
+		fetchData();
+	}, [code, user]);
 
 	return (
 		<>
