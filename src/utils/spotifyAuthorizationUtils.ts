@@ -81,7 +81,7 @@ const callTokenApi = async (
 export const getAccessToken = async (
 	code: string
 ): Promise<AuthenticationResponse> => {
-	const clientId = '817f238fdbbe4366b36d51fa37708342';
+	const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
 	const redirectUri = 'http://localhost:5173';
 
 	const codeVerifier = localStorage.getItem('code_verifier') ?? '';
@@ -100,7 +100,7 @@ export const getAccessToken = async (
 export const getRefreshedToken = async (
 	refresh_token: string
 ): Promise<AuthenticationResponse> => {
-	const clientId = '817f238fdbbe4366b36d51fa37708342';
+	const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
 
 	const body = new URLSearchParams({
 		grant_type: 'refresh_token',
