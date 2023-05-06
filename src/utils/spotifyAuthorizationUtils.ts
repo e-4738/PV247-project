@@ -3,8 +3,8 @@ type AuthenticationResponse = {
 	refreshToken?: string;
 };
 
-const clientId = process.env.REACT_APP_CLIENT_ID ?? '';
-const redirectUri = 'http://localhost:5173';
+const clientId = '817f238fdbbe4366b36d51fa37708342' ?? '';
+const redirectUri = 'http://localhost:5174';
 
 export const generateRandomString = (length: number) => {
 	let text = '';
