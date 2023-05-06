@@ -1,18 +1,17 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
 import { getAccessToken } from '../utils/spotifyAuthorizationUtils';
 import { userDocument } from '../firebase';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
 
 const Home = () => {
 	usePageTitle('Home');
 	const user = useLoggedInUser();
-
-	// quite possibly unneeded
-	const [accessToken, setAccessToken] = useState<string>();
+	const [accessToken, setAccessToken] = useSpotifyAuth();
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code') ?? undefined;
@@ -44,11 +43,33 @@ const Home = () => {
 		fetchData();
 	}, [code, user]);
 
+	/** 
+	useEffect(() => {
+		const loadSpotifyData = async () => {
+			const result = await fetch(
+				'https://api.spotify.com/v1/browse/categories/pop/playlists',
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${accessToken}`
+					}
+				}
+			);
+			if (!result.ok) {
+				return '';
+			}
+			const data = await result.json();
+			const { d, e } = data;
+			console.log(data);
+			setDataa(d);
+		};
+		loadSpotifyData();
+	}, []);
+*/
 	return (
 		<>
 			<img src="gradient_brain.png" alt="beatbranic logo" width="400px" />
 			<Typography variant="h1">Beat Braniac</Typography>
-
 			<Box
 				sx={{
 					display: 'flex',
@@ -61,7 +82,6 @@ const Home = () => {
 					Guess your favourite songs or find new music in a fun way.
 				</Typography>
 			</Box>
-
 			<Grid container spacing={2}>
 				<Grid item xs={12} md={6}>
 					<Paper elevation={3} sx={{ p: 2 }}>
@@ -79,6 +99,7 @@ const Home = () => {
 					</Paper>
 				</Grid>
 			</Grid>
+			{accessToken}
 		</>
 	);
 };
