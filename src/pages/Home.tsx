@@ -46,6 +46,7 @@ const Home = () => {
 
 	return (
 		<>
+			<img src="gradient_brain.png" alt="beatbranic logo" width="400px" />
 			<Typography variant="h1">Beat Braniac</Typography>
 
 			<Box
