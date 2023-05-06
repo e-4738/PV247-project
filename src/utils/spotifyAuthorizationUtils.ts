@@ -3,8 +3,8 @@ type AuthenticationResponse = {
 	refreshToken?: string;
 };
 
-const clientId = '817f238fdbbe4366b36d51fa37708342' ?? '';
-const redirectUri = 'http://localhost:5174';
+const clientId = '817f238fdbbe4366b36d51fa37708342';
+const redirectUri = 'http://localhost:5173';
 
 export const generateRandomString = (length: number) => {
 	let text = '';
@@ -132,4 +132,14 @@ export const getRefreshedToken = async (
 	});
 
 	return callTokenApi(body);
+};
+
+export const fetchProfile = async (token: string): Promise<any> => {
+	console.log(`sending request with ${token}`);
+	const result = await fetch('https://api.spotify.com/v1/me', {
+		method: 'GET',
+		headers: { Authorization: `Bearer ${token}` }
+	});
+
+	return await result.json();
 };

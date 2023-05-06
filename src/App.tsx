@@ -17,6 +17,7 @@ import {
 	useNavigate
 } from '@tanstack/react-router';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
 import { theme } from './theme';
 import Home from './pages/Home';
@@ -47,7 +48,10 @@ const rootRoute = new RootRoute({
 							<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
 							<Box sx={{ flexGrow: 1 }} />
 							{!user ? (
-								<ButtonLink to="/login">LogIn</ButtonLink>
+								<ButtonLink variant="outlined" to="/login">
+									LogIn
+									<LoginRoundedIcon sx={{ ml: 1 }} />
+								</ButtonLink>
 							) : (
 								<>
 									<ButtonLink to="/profile">

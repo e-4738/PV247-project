@@ -3,7 +3,10 @@ import { useEffect } from 'react';
 import { setDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
-import { getAccessToken } from '../utils/spotifyAuthorizationUtils';
+import {
+	fetchProfile,
+	getAccessToken
+} from '../utils/spotifyAuthorizationUtils';
 import { userDocument } from '../firebase';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
@@ -28,6 +31,7 @@ const Home = () => {
 			if (data.accessToken) {
 				setAccessToken(data.accessToken);
 				console.log(`got token, token is ${data.accessToken}`);
+
 				await setDoc(
 					userDocument(user.email),
 					{
@@ -42,6 +46,22 @@ const Home = () => {
 
 		fetchData();
 	}, [code, user]);
+
+	//not the best place to do it either
+	useEffect(() => {
+		const fetchProfileData = async () => {
+			const profile = await fetchProfile(accessToken);
+			console.log(`got profile, profile is:${profile}`);
+
+			console.log(`name:${profile.display_name}`);
+			console.log(`id:${profile.id}`);
+			console.log(`email:${profile.email}`);
+			console.log(`image:${profile.images[0].url}`);
+			console.log(`email:${profile.href}`);
+		};
+
+		fetchProfileData();
+	}, [accessToken]);
 
 	/** 
 	useEffect(() => {

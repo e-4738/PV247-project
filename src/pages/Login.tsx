@@ -41,7 +41,7 @@ const Login = () => {
 						const refreshToken = await getRefreshToken(email.value);
 						if (refreshToken) {
 							const data = await getRefreshedToken(refreshToken);
-							console.log(`got token, token is ${data.accessToken}`);
+							console.log(`got refreshed token, token is ${refreshToken}`);
 
 							await setDoc(
 								userDocument(email.value),
@@ -64,7 +64,7 @@ const Login = () => {
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				width: '100%',
+				width: '70%',
 				p: 4,
 				gap: 2
 			}}
