@@ -13,8 +13,10 @@ import {
 	RootRoute,
 	Route,
 	Router,
-	RouterProvider
+	RouterProvider,
+	useNavigate
 } from '@tanstack/react-router';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 import { theme } from './theme';
 import Home from './pages/Home';
@@ -27,10 +29,12 @@ import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { signOut } from './firebase';
 import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
+import Profile from './pages/Profile';
 
 const rootRoute = new RootRoute({
 	component: () => {
 		const user = useLoggedInUser();
+		const navigate = useNavigate();
 		return (
 			<>
 				<CssBaseline />
@@ -46,8 +50,19 @@ const rootRoute = new RootRoute({
 								<ButtonLink to="/login">LogIn</ButtonLink>
 							) : (
 								<>
-									<Avatar sx={{ width: 30, height: 30 }} src="taylor.jpg" />
-									<Button onClick={signOut}>LogOut</Button>
+									<ButtonLink to="/profile">
+										<Avatar sx={{ width: 30, height: 30 }} src="taylor.jpg" />
+									</ButtonLink>
+									<Button
+										variant="outlined"
+										onClick={() => {
+											signOut();
+											navigate({ to: '/' });
+										}}
+									>
+										Logout
+										<LogoutRoundedIcon sx={{ ml: 1 }} />
+									</Button>
 								</>
 							)}
 						</Toolbar>
@@ -103,6 +118,12 @@ const loginRoute = new Route({
 	component: Login
 });
 
+const profileRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/profile',
+	component: Profile
+});
+
 const notFoundRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '*',
@@ -115,6 +136,7 @@ const routeTree = rootRoute.addChildren([
 	yourMatchesRoute,
 	leadeBoardRoute,
 	loginRoute,
+	profileRoute,
 	notFoundRoute
 ]);
 

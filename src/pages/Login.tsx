@@ -2,7 +2,7 @@ import { Button, Paper, Typography, TextField, Box } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { setDoc } from 'firebase/firestore';
-import Image from 'mui-image';
+import { Image } from 'mui-image';
 
 import usePageTitle from '../hooks/usePageTitle';
 import { getRefreshToken, signIn, signUp, userDocument } from '../firebase';
