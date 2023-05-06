@@ -19,6 +19,20 @@ const Home = () => {
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code') ?? undefined;
 
+	//not the best place to do it either
+	const fetchProfileData = async (token: string) => {
+		const profile = await fetchProfile(token);
+		console.log(`got profile, profile is:${profile}`);
+
+		console.log(`name:${profile.display_name}`);
+		console.log(`id:${profile.id}`);
+		console.log(`email:${profile.email}`);
+		console.log(`image:${profile.images[0].url}`);
+		console.log(`email:${profile.href}`);
+
+		console.log('data fetched, profile printing over');
+	};
+
 	//not the best place to do it, but at least it works
 	useEffect(() => {
 		const fetchData = async () => {
@@ -31,6 +45,8 @@ const Home = () => {
 			if (data.accessToken) {
 				setAccessToken(data.accessToken);
 				console.log(`got token, token is ${data.accessToken}`);
+
+				fetchProfileData(data.accessToken);
 
 				await setDoc(
 					userDocument(user.email),
@@ -47,21 +63,9 @@ const Home = () => {
 		fetchData();
 	}, [code, user]);
 
-	//not the best place to do it either
-	useEffect(() => {
-		const fetchProfileData = async () => {
-			const profile = await fetchProfile(accessToken);
-			console.log(`got profile, profile is:${profile}`);
-
-			console.log(`name:${profile.display_name}`);
-			console.log(`id:${profile.id}`);
-			console.log(`email:${profile.email}`);
-			console.log(`image:${profile.images[0].url}`);
-			console.log(`email:${profile.href}`);
-		};
-
-		fetchProfileData();
-	}, [accessToken]);
+	// useEffect(() => {
+	// 	fetchProfileData();
+	// }, [accessToken]);
 
 	/** 
 	useEffect(() => {
