@@ -1,14 +1,10 @@
-import { Button, Paper, TextField, Typography } from '@mui/material';
-import { FormEvent, useState } from 'react';
+import { Button, Paper, TextField } from '@mui/material';
+import { FormEvent } from 'react';
 
 // import useField from '../hooks/useField';
 
 // const song = useField('song', true);
 // const artist = useField('artist', true);
-
-// const [isSignUp, setSignUp] = useState(false);
-
-// const [submitError, setSubmitError] = useState<string>();
 
 const GuessSong = () => (
 	<>
@@ -21,18 +17,22 @@ const GuessSong = () => (
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				width: '40%',
 				p: 4,
-				gap: 2
+				paddingBottom: 8
 			}}
 		>
-			<img src="midnights.png" alt="album_cover" width="200px" />
-			<Typography>Song</Typography>
-			<Typography>Artist</Typography>
-			{/* <TextField label="song" {...song.props} type="email" />
-		<TextField label="artist" {...artist.props} type="password" /> */}
+			<img src="questionmarksquare.png" alt="album_cover" width="250px" />
+			<TextField id="song" label="Song" variant="standard" />
+			<TextField id="artist" label="Artist" variant="standard" />
 		</Paper>
-		<Button variant="contained">Submit</Button>
+		<Button
+			variant="contained"
+			onClick={e => {
+				console.log(e);
+			}}
+		>
+			Guess
+		</Button>
 	</>
 );
 

@@ -7,9 +7,7 @@ const useField = (id: string, required?: boolean) => {
 	const error = required && touched && !value;
 
 	return {
-		// Current value for convenient access
 		value,
-		// Props for the TextField
 		props: {
 			id,
 			value,

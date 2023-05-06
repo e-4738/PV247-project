@@ -14,6 +14,13 @@ export const theme = createTheme({
 			WebkitBackgroundClip: 'text',
 			WebkitTextFillColor: 'transparent'
 		},
+		h4: {
+			fontWeight: 600,
+			background:
+				'linear-gradient(90deg, rgba(121,9,59,1) 0%, rgba(214,92,242,1) 40%, rgba(239,207,227,1) 66%)',
+			WebkitBackgroundClip: 'text',
+			WebkitTextFillColor: 'transparent'
+		},
 		h5: {
 			fontWeight: 600,
 			background:
