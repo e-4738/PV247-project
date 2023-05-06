@@ -1,5 +1,5 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
@@ -43,29 +43,6 @@ const Home = () => {
 		fetchData();
 	}, [code, user]);
 
-	/** 
-	useEffect(() => {
-		const loadSpotifyData = async () => {
-			const result = await fetch(
-				'https://api.spotify.com/v1/browse/categories/pop/playlists',
-				{
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${accessToken}`
-					}
-				}
-			);
-			if (!result.ok) {
-				return '';
-			}
-			const data = await result.json();
-			const { d, e } = data;
-			console.log(data);
-			setDataa(d);
-		};
-		loadSpotifyData();
-	}, []);
-*/
 	return (
 		<>
 			<Typography variant="h1">Beat Braniac</Typography>
@@ -98,7 +75,6 @@ const Home = () => {
 					</Paper>
 				</Grid>
 			</Grid>
-			{accessToken}
 		</>
 	);
 };
