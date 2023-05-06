@@ -26,6 +26,7 @@ import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { signOut } from './firebase';
+import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -128,9 +129,11 @@ declare module '@tanstack/react-router' {
 
 const App = () => (
 	<UserProvider>
-		<ThemeProvider theme={theme}>
-			<RouterProvider router={router} />
-		</ThemeProvider>
+		<SpotifyAccessProvider>
+			<ThemeProvider theme={theme}>
+				<RouterProvider router={router} />
+			</ThemeProvider>
+		</SpotifyAccessProvider>
 	</UserProvider>
 );
 
