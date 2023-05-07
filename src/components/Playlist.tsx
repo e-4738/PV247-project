@@ -1,12 +1,20 @@
-import { Button, Paper, TextField, Typography } from '@mui/material';
-import { FC, useEffect } from 'react';
+import { Paper, Typography } from '@mui/material';
+import { FC } from 'react';
 
-type Prop = {
-	name: string;
-};
-
-const Playlist: FC<Prop> = ({ name }) => (
-	<Paper sx={{ m: 1, p: 2 }}> {name} </Paper>
+const Playlist: FC = ({ data }) => (
+	<Paper
+		sx={{
+			m: 2,
+			p: 2,
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			width: '150px'
+		}}
+	>
+		<img src={data.images[0].url} alt="playlist_cover" width="100px" />
+		<Typography sx={{ textAlign: 'center' }}>{data.name}</Typography>
+	</Paper>
 );
 
 export default Playlist;

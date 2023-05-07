@@ -4,7 +4,7 @@ type AuthenticationResponse = {
 };
 
 const clientId = '817f238fdbbe4366b36d51fa37708342' ?? '';
-const redirectUri = 'http://localhost:5174';
+const redirectUri = 'http://localhost:5173';
 
 export const generateRandomString = (length: number) => {
 	let text = '';
