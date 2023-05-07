@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 import usePageTitle from '../hooks/usePageTitle';
@@ -29,6 +29,7 @@ const PlayQuiz = () => {
 
 	return (
 		<>
+			<Avatar sx={{ width: 200, height: 200 }} src={user?.image} />
 			<Typography variant="h1">Pick your playlist</Typography>
 			<Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
