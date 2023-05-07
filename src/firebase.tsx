@@ -5,7 +5,9 @@ import {
 	doc,
 	DocumentReference,
 	getFirestore,
-	getDoc
+	query,
+	where,
+	getDocs
 } from 'firebase/firestore';
 
 // Initialize Firebase
@@ -39,3 +41,28 @@ export const gamesCollection = collection(
 
 export const gameDocument = (id: string) =>
 	doc(db, 'games', id) as DocumentReference<Game>;
+
+export const getUsersGames = async (userId: string) => {
+	const q = query(gamesCollection, where('spotifyUserId', '==', userId));
+	const querySnapshot = await getDocs(q);
+
+	const games: Game[] = [];
+	querySnapshot.forEach((doc: any) => {
+		console.log(doc.id, ' => ', doc.data());
+
+		const game: Game = {
+			spotifyUserId: doc.get('spotifyUserId'),
+			spotifyDisplayName: doc.get('spotifyDisplayName'),
+			spotifyUserProfileLink: doc.get('spotifyUserProfileLink'),
+			userProfilePictureLink: doc.get('userProfilePictureLink'),
+			playlistName: doc.get('playlistName'),
+			playlistLink: doc.get('playlistLink'),
+			score: doc('score'),
+			duration: doc.get('duration')
+		};
+
+		games.push(game);
+	});
+
+	return games;
+};
