@@ -6,7 +6,7 @@ import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
-const Profile = () => {
+const Profile = async () => {
 	usePageTitle('My Profile');
 	const navigate = useNavigate();
 	const user = useLoggedInUser();

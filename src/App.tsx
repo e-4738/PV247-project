@@ -33,7 +33,6 @@ import { signOut } from './firebase';
 import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
 import Profile from './pages/Profile';
 import { SpotifyUserProvider } from './hooks/useSpotifyProfile';
-import useProfile from './hooks/useProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {

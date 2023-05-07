@@ -65,7 +65,9 @@ export const usersCollection = collection(
 export const userDocument = (mail: string) =>
 	doc(db, 'users', mail) as DocumentReference<SpotifyUser>;
 
-export const getSpotifyUserFromDB = async (mail: string) => {
+export const getSpotifyUserFromDB = async (mail?: string) => {
+	if (!mail) return null;
+
 	const docSnap = await getDoc(userDocument(mail));
 
 	if (docSnap.exists()) {
