@@ -2,10 +2,7 @@ import { initializeApp } from 'firebase/app';
 import {
 	collection,
 	CollectionReference,
-	doc,
-	DocumentReference,
-	getFirestore,
-	getDoc
+	getFirestore
 } from 'firebase/firestore';
 
 // Initialize Firebase
@@ -36,6 +33,3 @@ export const gamesCollection = collection(
 	db,
 	'games'
 ) as CollectionReference<Game>;
-
-export const gameDocument = (id: string) =>
-	doc(db, 'games', id) as DocumentReference<Game>;
