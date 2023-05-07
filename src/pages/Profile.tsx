@@ -10,6 +10,7 @@ const Profile = () => {
 	usePageTitle('My Profile');
 	const navigate = useNavigate();
 	const user = useLoggedInUser();
+
 	return (
 		<>
 			<Typography variant="h4" textAlign="center" mb={3}>

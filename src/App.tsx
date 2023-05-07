@@ -31,6 +31,7 @@ import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { signOut } from './firebase';
 import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
 import Profile from './pages/Profile';
+import { SpotifyUserProvider } from './hooks/useSpotifyProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -155,11 +156,13 @@ declare module '@tanstack/react-router' {
 
 const App = () => (
 	<UserProvider>
-		<SpotifyAccessProvider>
-			<ThemeProvider theme={theme}>
-				<RouterProvider router={router} />
-			</ThemeProvider>
-		</SpotifyAccessProvider>
+		<SpotifyUserProvider>
+			<SpotifyAccessProvider>
+				<ThemeProvider theme={theme}>
+					<RouterProvider router={router} />
+				</ThemeProvider>
+			</SpotifyAccessProvider>
+		</SpotifyUserProvider>
 	</UserProvider>
 );
 
