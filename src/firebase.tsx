@@ -7,8 +7,7 @@ import {
 	getFirestore,
 	query,
 	where,
-	getDocs,
-	getFirestore
+	getDocs
 } from 'firebase/firestore';
 
 // Initialize Firebase

@@ -29,10 +29,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
-import { signOut } from './firebase';
-import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
 import Profile from './pages/Profile';
-import { SpotifyUserProvider } from './hooks/useSpotifyProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -63,7 +60,6 @@ const rootRoute = new RootRoute({
 									<Button
 										variant="outlined"
 										onClick={() => {
-											signOut();
 											navigate({ to: '/' });
 										}}
 									>
@@ -160,15 +156,11 @@ const queryClient = new QueryClient();
 
 const App = () => (
 	<UserProvider>
-		<SpotifyUserProvider>
-			<SpotifyAccessProvider>
-				<QueryClientProvider client={queryClient}>
-					<ThemeProvider theme={theme}>
-						<RouterProvider router={router} />
-					</ThemeProvider>
-				</QueryClientProvider>
-			</SpotifyAccessProvider>
-		</SpotifyUserProvider>
+		<QueryClientProvider client={queryClient}>
+			<ThemeProvider theme={theme}>
+				<RouterProvider router={router} />
+			</ThemeProvider>
+		</QueryClientProvider>
 	</UserProvider>
 );
 

@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 import usePageTitle from '../hooks/usePageTitle';
-import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
 import Playlist from '../components/Playlist';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 
 export type SpotifyPlaylist = {
 	name: string;
@@ -14,7 +14,7 @@ export type SpotifyPlaylist = {
 
 const PlayQuiz = () => {
 	usePageTitle('Play');
-	const [accessToken] = useSpotifyAuth();
+	const user = useLoggedInUser();
 
 	const { data } = useQuery({
 		queryKey: ['playlists'],
@@ -22,7 +22,7 @@ const PlayQuiz = () => {
 			fetch('https://api.spotify.com/v1/browse/categories/pop/playlists', {
 				method: 'GET',
 				headers: {
-					Authorization: `Bearer ${accessToken}`
+					Authorization: `Bearer ${user?.accessToken}`
 				}
 			}).then(res => res.json())
 	});

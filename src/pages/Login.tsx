@@ -1,73 +1,16 @@
-import { Button, Paper, Typography, TextField, Box } from '@mui/material';
-import { FormEvent, useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { setDoc } from 'firebase/firestore';
+import { Button, Paper, Typography, Box } from '@mui/material';
 import { Image } from 'mui-image';
 
 import usePageTitle from '../hooks/usePageTitle';
-import { getRefreshToken, signIn, signUp, userDocument } from '../firebase';
-import useField from '../hooks/useField';
 import {
-	fetchProfile,
-	getRefreshedToken,
 	getSpotifyAuthorizationCode
 } from '../utils/spotifyAuthorizationUtils';
 
 const Login = () => {
 	usePageTitle('Login');
 
-	const navigate = useNavigate();
-
-	const [isSignUp, setSignUp] = useState(false);
-
-	const email = useField('email', true);
-	const password = useField('password', true);
-
-	const [submitError, setSubmitError] = useState<string>();
-
 	return (
 		<Paper
-			component="form"
-			onSubmit={async (e: FormEvent) => {
-				e.preventDefault();
-				try {
-					if (isSignUp) {
-						await signUp(email.value, password.value);
-						// since user is signing up, the auth code is needed first
-						await getSpotifyAuthorizationCode();
-					} else {
-						await signIn(email.value, password.value);
-
-						// get the refresh token from db
-						const refreshToken = await getRefreshToken(email.value);
-						if (refreshToken) {
-							const data = await getRefreshedToken(refreshToken);
-							console.log(`got refreshed token, token is ${refreshToken}`);
-
-							const profile = await fetchProfile(data.accessToken ?? '');
-
-							await setDoc(
-								userDocument(email.value),
-								{
-									mail: email.value,
-									spotifyUserId: profile.id,
-									displayName: profile.display_name,
-									image: profile.images[0].url,
-									profileLink: profile.external_urls.spotify,
-									accessToken: data.accessToken,
-									refreshToken: data.refreshToken
-								},
-								{ merge: true }
-							);
-						}
-						navigate({ to: '/' });
-					}
-				} catch (err) {
-					setSubmitError(
-						(err as { message?: string })?.message ?? 'Unknown Error'
-					);
-				}
-			}}
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
@@ -83,7 +26,7 @@ const Login = () => {
 			<Button
 				type="submit"
 				variant="outlined"
-				onClick={() => console.log('Redirect to spotify auth')}
+				onClick={getSpotifyAuthorizationCode}
 			>
 				Sign In With
 				<Box ml="8px">

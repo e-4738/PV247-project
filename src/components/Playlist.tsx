@@ -1,10 +1,11 @@
 import { Paper, Typography } from '@mui/material';
 import { FC } from 'react';
-import {SpotifyPlaylist} from "../pages/PlayQuiz.tsx";
+
+import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';
 
 type Prop = {
-	data: SpotifyPlaylist
-}
+	data: SpotifyPlaylist;
+};
 const Playlist: FC<Prop> = ({ data }) => (
 	<Paper
 		sx={{

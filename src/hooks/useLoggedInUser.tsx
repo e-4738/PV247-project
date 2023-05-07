@@ -6,20 +6,70 @@ import {
 	useEffect,
 	useState
 } from 'react';
-import { User } from 'firebase/auth';
 
-import { onAuthChanged } from '../firebase';
+import {
+	fetchProfile,
+	getAccessToken
+} from '../utils/spotifyAuthorizationUtils';
 
-const UserContext = createContext<User | undefined>(undefined);
+type SpotifyUser = {
+	spotifyUserId: string;
+	mail: string;
+	displayName: string;
+	image: string;
+	profileLink: string;
+	accessToken: string;
+	refreshtoken: string;
+};
+
+const UserContext = createContext<SpotifyUser | undefined>(undefined);
 
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 	// Hold user info in state
-	const [user, setUser] = useState<User>();
+	const [accessToken, setAccessToken] = useState<string>();
+	const [user, setUser] = useState<SpotifyUser>();
 
-	// Setup onAuthChanged once when component is mounted
 	useEffect(() => {
-		onAuthChanged(u => setUser(u ?? undefined));
+		const fetchData = async (code: string) => {
+			const data = await getAccessToken(code);
+
+			if (data.accessToken && data.refreshToken) {
+				setAccessToken(data.accessToken);
+				localStorage.setItem('access_token', data.accessToken);
+				localStorage.setItem('refresh_token', data.refreshToken);
+				console.log(`got token, token is ${data.accessToken}`);
+			}
+		};
+
+		const urlParams = new URLSearchParams(window.location.search);
+		const code = urlParams.get('code') ?? undefined;
+
+		if (code) {
+			fetchData(code);
+		}
 	}, []);
+
+	useEffect(() => {
+		const fetchProfileData = async () => {
+			const profile = await fetchProfile(accessToken ?? '');
+
+			const SU: SpotifyUser = {
+				mail: profile.email,
+				spotifyUserId: profile.id,
+				displayName: profile.display_name,
+				image: profile.images[0].url,
+				profileLink: profile.external_urls.spotify,
+				accessToken,
+				refreshToken: localStorage.getItem('refresh_token')
+			};
+
+			setUser(SU);
+		};
+
+		if (accessToken) {
+			fetchProfileData();
+		}
+	}, [accessToken]);
 
 	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
