@@ -35,8 +35,7 @@ export const theme = createTheme({
 				// Css rule that makes sure app is always 100% height of window
 				'body, #root': {
 					display: 'flex',
-					flexDirection: 'column',
-					minHeight: '100vh'
+					flexDirection: 'column'
 				}
 			}
 		}

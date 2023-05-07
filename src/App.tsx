@@ -18,6 +18,7 @@ import {
 } from '@tanstack/react-router';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { theme } from './theme';
 import Home from './pages/Home';
@@ -153,12 +154,16 @@ declare module '@tanstack/react-router' {
 	}
 }
 
+const queryClient = new QueryClient();
+
 const App = () => (
 	<UserProvider>
 		<SpotifyAccessProvider>
-			<ThemeProvider theme={theme}>
-				<RouterProvider router={router} />
-			</ThemeProvider>
+			<QueryClientProvider client={queryClient}>
+				<ThemeProvider theme={theme}>
+					<RouterProvider router={router} />
+				</ThemeProvider>
+			</QueryClientProvider>
 		</SpotifyAccessProvider>
 	</UserProvider>
 );

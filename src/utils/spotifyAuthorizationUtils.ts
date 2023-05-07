@@ -3,7 +3,7 @@ type AuthenticationResponse = {
 	refreshToken?: string;
 };
 
-const clientId = '817f238fdbbe4366b36d51fa37708342';
+const clientId = '817f238fdbbe4366b36d51fa37708342' ?? '';
 const redirectUri = 'http://localhost:5173';
 
 export const generateRandomString = (length: number) => {

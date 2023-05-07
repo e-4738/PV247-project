@@ -1,20 +1,33 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 import usePageTitle from '../hooks/usePageTitle';
-import GuessSong from '../components/GuessSong';
-import useLyricsGenerator from '../hooks/useLyricsGenerator';
+import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
+import Playlist from '../components/Playlist';
 
 const PlayQuiz = () => {
 	usePageTitle('Play');
-	const quote = useLyricsGenerator();
+	const [accessToken] = useSpotifyAuth();
+
+	const { data } = useQuery({
+		queryKey: ['playlists'],
+		queryFn: () =>
+			fetch('https://api.spotify.com/v1/browse/categories/pop/playlists', {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				}
+			}).then(res => res.json())
+	});
 
 	return (
 		<>
-			<Typography>{quote}</Typography>
-			<Typography variant="h1">
-				This is where the PlayQuiz page will be.
-			</Typography>
-			<GuessSong />
+			<Typography variant="h1">Pick your playlist</Typography>
+			<Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+				{data?.playlists?.items?.map((item, key) => (
+					<Playlist key={key} data={item} />
+				))}
+			</Box>
 		</>
 	);
 };
