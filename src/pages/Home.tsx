@@ -9,14 +9,16 @@ import {
 	fetchProfile,
 	getAccessToken
 } from '../utils/spotifyAuthorizationUtils';
-import { userDocument } from '../firebase';
+import { SpotifyUser, userDocument } from '../firebase';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
+import useSpotifyProfile from '../hooks/useSpotifyProfile';
 
 const Home = () => {
 	usePageTitle('Home');
 	const user = useLoggedInUser();
 	const [accessToken, setAccessToken] = useSpotifyAuth();
+	const profileContext = useSpotifyProfile();
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const code = urlParams.get('code') ?? undefined;
@@ -36,19 +38,19 @@ const Home = () => {
 
 				const profile = await fetchProfile(data.accessToken);
 
-				await setDoc(
-					userDocument(user.email),
-					{
-						mail: user.email,
-						spotifyUserId: profile.id,
-						displayName: profile.display_name,
-						image: profile.images[0].url,
-						profileLink: profile.external_urls.spotify,
-						accessToken: data.accessToken,
-						refreshToken: data.refreshToken
-					},
-					{ merge: true }
-				);
+				const SU: SpotifyUser = {
+					mail: user.email,
+					spotifyUserId: profile.id,
+					displayName: profile.display_name,
+					image: profile.images[0].url,
+					profileLink: profile.external_urls.spotify,
+					accessToken: data.accessToken,
+					refreshToken: data.refreshToken ?? ''
+				};
+
+				// profileContext.setSpotifyUser(SU);
+
+				await setDoc(userDocument(user.email), SU, { merge: true });
 			}
 		};
 

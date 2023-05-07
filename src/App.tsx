@@ -32,6 +32,7 @@ import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { signOut } from './firebase';
 import { SpotifyAccessProvider } from './hooks/useSpotifyAuth';
 import Profile from './pages/Profile';
+import { SpotifyUserProvider } from './hooks/useSpotifyProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -158,13 +159,15 @@ const queryClient = new QueryClient();
 
 const App = () => (
 	<UserProvider>
-		<SpotifyAccessProvider>
-			<QueryClientProvider client={queryClient}>
-				<ThemeProvider theme={theme}>
-					<RouterProvider router={router} />
-				</ThemeProvider>
+		<SpotifyUserProvider>
+			<SpotifyAccessProvider>
+				<QueryClientProvider client={queryClient}>
+					<ThemeProvider theme={theme}>
+						<RouterProvider router={router} />
+					</ThemeProvider>
 			</QueryClientProvider>
-		</SpotifyAccessProvider>
+			</SpotifyAccessProvider>
+		</SpotifyUserProvider>
 	</UserProvider>
 );
 
