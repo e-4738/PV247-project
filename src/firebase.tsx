@@ -49,7 +49,10 @@ const db = getFirestore();
 
 export type SpotifyUser = {
 	mail: string;
-	spotifyId: string;
+	spotifyUserId: string;
+	displayName: string;
+	image: string;
+	profileLink: string;
 	accessToken: string;
 	refreshToken: string;
 };
@@ -68,4 +71,12 @@ export const getRefreshToken = async (
 	const docSnap = await getDoc(userDocument(mail));
 
 	return docSnap.get('refreshToken');
+};
+
+export const getAccessToken = async (
+	mail: string
+): Promise<string | undefined> => {
+	const docSnap = await getDoc(userDocument(mail));
+
+	return docSnap.get('accessToken');
 };

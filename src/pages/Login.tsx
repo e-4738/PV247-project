@@ -8,6 +8,7 @@ import usePageTitle from '../hooks/usePageTitle';
 import { getRefreshToken, signIn, signUp, userDocument } from '../firebase';
 import useField from '../hooks/useField';
 import {
+	fetchProfile,
 	getRefreshedToken,
 	getSpotifyAuthorizationCode
 } from '../utils/spotifyAuthorizationUtils';
@@ -43,10 +44,16 @@ const Login = () => {
 							const data = await getRefreshedToken(refreshToken);
 							console.log(`got refreshed token, token is ${refreshToken}`);
 
+							const profile = await fetchProfile(data.accessToken ?? '');
+
 							await setDoc(
 								userDocument(email.value),
 								{
 									mail: email.value,
+									spotifyUserId: profile.id,
+									displayName: profile.display_name,
+									image: profile.images[0].url,
+									profileLink: profile.external_urls.spotify,
 									accessToken: data.accessToken,
 									refreshToken: data.refreshToken
 								},
