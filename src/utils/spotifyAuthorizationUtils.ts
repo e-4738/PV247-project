@@ -134,7 +134,7 @@ export const getRefreshedToken = async (
 	return callTokenApi(body);
 };
 
-export const fetchProfile = async (token: string): Promise<any> => {
+export const fetchProfile = async (token: string): Promise<unknown> => {
 	console.log(`sending request with ${token}`);
 	const result = await fetch('https://api.spotify.com/v1/me', {
 		method: 'GET',
@@ -142,4 +142,21 @@ export const fetchProfile = async (token: string): Promise<any> => {
 	});
 
 	return await result.json();
+};
+
+export type SpotifyUser = {
+	spotifyUserId: string;
+	displayName: string;
+	imageUrl: string;
+	profileLink: string;
+};
+
+export const parseProfile = (profile: Promise<unknown>) => {
+	const SU: SpotifyUser = {
+		spotifyUserId: profile.id,
+		displayName: profile.display_name,
+		imageUrl: profile.images[0].url,
+		profileLink: profile.external_urls.spotify
+	};
+	return SU;
 };
