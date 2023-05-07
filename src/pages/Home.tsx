@@ -1,15 +1,13 @@
-import { Box, Button, Grid, Paper, Typography } from '@mui/material';
-import { useEffect } from 'react';
-import { Box, Grid, Paper, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { setDoc } from 'firebase/firestore';
+import { useEffect } from 'react';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import {
 	fetchProfile,
 	getAccessToken
 } from '../utils/spotifyAuthorizationUtils';
-import { SpotifyUser, userDocument } from '../firebase';
+import { SpotifyUser, getSpotifyUserFromDB, userDocument } from '../firebase';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
 import useSpotifyProfile from '../hooks/useSpotifyProfile';
@@ -97,6 +95,16 @@ const Home = () => {
 					</Paper>
 				</Grid>
 			</Grid>
+
+			<Button
+				variant="contained"
+				onClick={async () => {
+					const response = await getSpotifyUserFromDB(user?.email ?? '');
+					console.log(response);
+				}}
+			>
+				Get data from DB
+			</Button>
 		</>
 	);
 };

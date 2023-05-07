@@ -65,6 +65,26 @@ export const usersCollection = collection(
 export const userDocument = (mail: string) =>
 	doc(db, 'users', mail) as DocumentReference<SpotifyUser>;
 
+export const getSpotifyUserFromDB = async (mail: string) => {
+	const docSnap = await getDoc(userDocument(mail));
+
+	if (docSnap.exists()) {
+		const SU: SpotifyUser = {
+			mail: docSnap.get('mail'),
+			spotifyUserId: docSnap.get('spotifyUserId'),
+			displayName: docSnap.get('displayName'),
+			image: docSnap.get('image'),
+			profileLink: docSnap.get('profileLink'),
+			accessToken: docSnap.get('accessToken'),
+			refreshToken: docSnap.get('refreshToken')
+		};
+		return SU;
+	} else {
+		console.log(`could not retriev user with email${mail}`);
+		return null;
+	}
+};
+
 export const getRefreshToken = async (
 	mail: string
 ): Promise<string | undefined> => {

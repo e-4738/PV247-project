@@ -165,7 +165,7 @@ const App = () => (
 					<ThemeProvider theme={theme}>
 						<RouterProvider router={router} />
 					</ThemeProvider>
-			</QueryClientProvider>
+				</QueryClientProvider>
 			</SpotifyAccessProvider>
 		</SpotifyUserProvider>
 	</UserProvider>
