@@ -5,6 +5,13 @@ import usePageTitle from '../hooks/usePageTitle';
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth';
 import Playlist from '../components/Playlist';
 
+export type SpotifyPlaylist = {
+	name: string;
+	images: Array<{
+		url: string;
+	}>;
+};
+
 const PlayQuiz = () => {
 	usePageTitle('Play');
 	const [accessToken] = useSpotifyAuth();
@@ -24,7 +31,7 @@ const PlayQuiz = () => {
 		<>
 			<Typography variant="h1">Pick your playlist</Typography>
 			<Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-				{data?.playlists?.items?.map((item, key) => (
+				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
 					<Playlist key={key} data={item} />
 				))}
 			</Box>
