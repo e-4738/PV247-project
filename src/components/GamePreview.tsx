@@ -1,27 +1,15 @@
 import { FC } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Button, Paper, Typography } from '@mui/material';
 
-import useLoggedInUser from '../hooks/useLoggedInUser';
+import usePlaylistsTracks from '../hooks/usePlaylistsTracks';
 
 type Prop = {
 	playlistId: string;
 };
 
 const GamePreview: FC<Prop> = ({ playlistId }) => {
-	const user = useLoggedInUser();
-
-	const { data } = useQuery({
-		queryKey: [playlistId],
-		queryFn: () =>
-			fetch(`https://api.spotify.com/v1/browse/playlists/${playlistId}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${user?.accessToken}`
-				}
-			}).then(res => res.json())
-	});
-
+	const tracks = usePlaylistsTracks(playlistId);
+	console.log(tracks);
 	return (
 		<Paper
 			sx={{ width: '100vh', p: 2, display: 'flex', flexDirection: 'column' }}
