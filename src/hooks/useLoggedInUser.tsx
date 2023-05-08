@@ -19,7 +19,7 @@ type SpotifyUser = {
 	image: string;
 	profileLink: string;
 	accessToken: string;
-	refreshtoken: string;
+	refreshToken: string;
 };
 
 const UserContext = createContext<SpotifyUser | undefined>(undefined);
@@ -59,10 +59,9 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 				displayName: profile.display_name,
 				image: profile.images[0].url,
 				profileLink: profile.external_urls.spotify,
-				accessToken,
-				refreshToken: localStorage.getItem('refresh_token')
+				accessToken: accessToken ?? '',
+				refreshToken: localStorage.getItem('refresh_token') ?? ''
 			};
-
 			setUser(SU);
 		};
 

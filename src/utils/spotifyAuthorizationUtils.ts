@@ -134,7 +134,7 @@ export const getRefreshedToken = async (
 	return callTokenApi(body);
 };
 
-export const fetchProfile = async (token: string): Promise<unknown> => {
+export const fetchProfile = async (token: string): Promise<UserProfile> => {
 	console.log(`sending request with ${token}`);
 	const result = await fetch('https://api.spotify.com/v1/me', {
 		method: 'GET',
