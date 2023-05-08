@@ -18,17 +18,19 @@ const Profile = () => {
 				flexDirection: 'column',
 				alignItems: 'center',
 				width: '50%',
-				p: 4
+				p: 4,
+				pt: 6,
+				pb: 6
 			}}
 		>
-			<Typography variant="h4" textAlign="center" mb={3}>
+			<Typography variant="h4" textAlign="center" mb={4}>
 				Your Profile
 			</Typography>
 			<Avatar sx={{ width: 200, height: 200, mb: 2 }} src={user?.image} />
 			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
 				{user?.displayName}
 			</Typography>
-			<Typography variant="body2" textAlign="center" sx={{ mb: 2 }}>
+			<Typography variant="body2" textAlign="center" sx={{ mb: 3 }}>
 				{user?.mail}
 			</Typography>
 			<Button
@@ -52,7 +54,7 @@ const Profile = () => {
 					logOutUser();
 					navigate({ to: '/' });
 				}}
-				sx={{ mt: 4 }}
+				sx={{ mt: 6 }}
 			>
 				Logout
 				<LogoutRoundedIcon sx={{ ml: 1 }} />
