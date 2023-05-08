@@ -25,7 +25,12 @@ const GamePreview: FC<Prop> = ({ playlistId }) => {
 				stats and option to play
 			</Typography>
 			<Typography>{tracks?.[0].track.preview_url}</Typography>
-			<ReactAudioPlayer src={track} onEnded={() => printEnd} autoPlay />
+			<ReactAudioPlayer
+				src={track}
+				volume={0.3}
+				onEnded={() => printEnd}
+				autoPlay
+			/>
 			<Typography>Playlist id: {playlistId}</Typography>
 			<Button>Play!</Button>
 		</Paper>

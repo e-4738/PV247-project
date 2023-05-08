@@ -32,7 +32,9 @@ const usePlaylistsTracks = (playlistId: string): Array<PlaylistTrack> => {
 			}).then(res => res.json())
 	});
 
-	return data?.tracks?.items.slice(0, 10);
+	return data?.tracks?.items
+		.filter((playlistTrack: PlaylistTrack) => playlistTrack.track.preview_url)
+		.slice(0, 10);
 };
 
 export default usePlaylistsTracks;
