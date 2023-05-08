@@ -3,11 +3,11 @@ import { Dispatch, FC, SetStateAction } from 'react';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';
 
-type Prop = {
+type Props = {
 	playlist: SpotifyPlaylist;
 	openDetail: Dispatch<SetStateAction<string>>;
 };
-const Playlist: FC<Prop> = ({ playlist, openDetail }) => (
+const Playlist: FC<Props> = ({ playlist, openDetail }) => (
 	<Paper
 		sx={{
 			m: 2,
