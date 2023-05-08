@@ -1,6 +1,5 @@
 import {
-	Box,
-	ToggleButton,
+	Box, ToggleButton,
 	ToggleButtonGroup,
 	Typography
 } from '@mui/material';

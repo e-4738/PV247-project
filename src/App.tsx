@@ -30,6 +30,7 @@ import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Profile from './pages/Profile';
+import { logOutUser } from './utils/logOutUser';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -60,6 +61,7 @@ const rootRoute = new RootRoute({
 									<Button
 										variant="outlined"
 										onClick={() => {
+											logOutUser();
 											navigate({ to: '/' });
 										}}
 									>
