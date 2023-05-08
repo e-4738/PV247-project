@@ -1,4 +1,4 @@
-import { Box, Button, ButtonBase, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { Dispatch, FC, SetStateAction } from 'react';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';

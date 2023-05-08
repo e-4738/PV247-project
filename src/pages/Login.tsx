@@ -1,10 +1,7 @@
-import { Button, Paper, Typography, Box } from '@mui/material';
-import { Image } from 'mui-image';
+import { Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
-import {
-	getSpotifyAuthorizationCode
-} from '../utils/spotifyAuthorizationUtils';
+import LoginWithSpotify from '../components/LoginWithSpotify';
 
 const Login = () => {
 	usePageTitle('Login');
@@ -23,22 +20,7 @@ const Login = () => {
 				User Login
 			</Typography>
 
-			<Button
-				type="submit"
-				variant="outlined"
-				onClick={getSpotifyAuthorizationCode}
-			>
-				Sign In With
-				<Box ml="8px">
-					<Image
-						src="spotifyLogo.png"
-						alt="Log in with Spotify."
-						width="90px"
-						duration={0}
-						bgColor="none"
-					/>
-				</Box>
-			</Button>
+			<LoginWithSpotify />
 		</Paper>
 	);
 };
