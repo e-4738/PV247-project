@@ -10,7 +10,7 @@ const LoginWithSpotify: FC = () => (
 		variant="outlined"
 		onClick={getSpotifyAuthorizationCode}
 	>
-		Sign In With
+		LogIn With
 		<Box ml="8px">
 			<Image
 				src="spotifyLogo.png"

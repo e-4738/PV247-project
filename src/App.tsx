@@ -44,9 +44,13 @@ const rootRoute = new RootRoute({
 					<Container>
 						<Toolbar>
 							<ButtonLink to="/">Home</ButtonLink>
-							<ButtonLink to="/play">Play</ButtonLink>
-							<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
-							<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
+							{user && (
+								<>
+									<ButtonLink to="/play">Play</ButtonLink>
+									<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
+									<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
+								</>
+							)}
 							<Box sx={{ flexGrow: 1 }} />
 							{!user ? (
 								<ButtonLink variant="outlined" to="/login">

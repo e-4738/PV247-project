@@ -1,4 +1,4 @@
-import { Avatar, Button, Link, Paper, Typography } from '@mui/material';
+import { Avatar, Button, Paper, Typography } from '@mui/material';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate } from '@tanstack/react-router';
 import { grey } from '@mui/material/colors';
