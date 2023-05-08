@@ -4,9 +4,9 @@ import { FC } from 'react';
 import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';
 
 type Prop = {
-	data: SpotifyPlaylist;
+	playlist: SpotifyPlaylist;
 };
-const Playlist: FC<Prop> = ({ data }) => (
+const Playlist: FC<Prop> = ({ playlist }) => (
 	<Paper
 		sx={{
 			m: 2,
@@ -17,8 +17,8 @@ const Playlist: FC<Prop> = ({ data }) => (
 			width: '150px'
 		}}
 	>
-		<img src={data.images[0].url} alt="playlist_cover" width="100px" />
-		<Typography sx={{ textAlign: 'center' }}>{data.name}</Typography>
+		<img src={playlist.images[0].url} alt="playlist_cover" width="100px" />
+		<Typography sx={{ textAlign: 'center' }}>{playlist.name}</Typography>
 	</Paper>
 );
 

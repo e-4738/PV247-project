@@ -6,6 +6,7 @@ import Playlist from '../components/Playlist';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
 export type SpotifyPlaylist = {
+	id: string;
 	name: string;
 	images: Array<{
 		url: string;
@@ -29,15 +30,15 @@ const PlayQuiz = () => {
 
 	return (
 		<>
-			<Avatar sx={{ width: 200, height: 200 }} src={user?.image} />
 			<Typography variant="h1">Pick your playlist</Typography>
 			<Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
-					<Playlist key={key} data={item} />
+					<Playlist key={key} playlist={item} />
 				))}
 			</Box>
 		</>
 	);
+
 };
 
 export default PlayQuiz;
