@@ -9,7 +9,8 @@ import {
 
 import {
 	fetchProfile,
-	getAccessToken
+	getAccessToken,
+	getRefreshedToken
 } from '../utils/spotifyAuthorizationUtils';
 
 type SpotifyUser = {
@@ -25,7 +26,6 @@ type SpotifyUser = {
 const UserContext = createContext<SpotifyUser | undefined>(undefined);
 
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
-	// Hold user info in state
 	const [accessToken, setAccessToken] = useState<string>();
 	const [user, setUser] = useState<SpotifyUser>();
 
@@ -37,7 +37,9 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 				setAccessToken(data.accessToken);
 				localStorage.setItem('access_token', data.accessToken);
 				localStorage.setItem('refresh_token', data.refreshToken);
-				console.log(`got token, token is ${data.accessToken}`);
+				console.log(
+					`authorization successful:\naccess token:\n${data.accessToken}\n\nrefresh token:\n${data.refreshToken}\n`
+				);
 			}
 		};
 
@@ -70,10 +72,34 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 		}
 	}, [accessToken]);
 
+	// after 1 hour the acess token expires and a new one needs to be obtained using the refresh token
+	useEffect(() => {
+		const refreshTokens = async () => {
+			const newTokens = await getRefreshedToken(user?.refreshToken ?? '');
+
+			localStorage.setItem('access_token', newTokens.accessToken ?? '');
+			localStorage.setItem('refresh_token', newTokens.refreshToken ?? '');
+
+			setAccessToken(newTokens.accessToken);
+			// + the user profile automatically updates, because the acessToken state changes
+		};
+
+		const interval = setInterval(async () => {
+			console.log('Time to update tokens!');
+			if (user !== undefined) {
+				refreshTokens();
+				console.log(`Updated the access token to:\n${user.accessToken}`);
+				console.log(`Updated the refresh token to:\n${user.refreshToken}`);
+			} else {
+				console.log('No user authentified.');
+			}
+		}, 60000 * 55); // 60000 (1 minute in ms) * 55 = 55 minutes in miliseconds
+		return () => clearInterval(interval);
+	}, [user]);
+
 	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 
-// Hook providing logged in user information
 const useLoggedInUser = () => useContext(UserContext);
 
 export default useLoggedInUser;
