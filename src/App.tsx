@@ -55,7 +55,7 @@ const rootRoute = new RootRoute({
 							) : (
 								<>
 									<ButtonLink to="/profile">
-										<Avatar sx={{ width: 30, height: 30 }} src={user.image} />
+										<Avatar sx={{ width: 35, height: 35 }} src={user.image} />
 									</ButtonLink>
 									<Button
 										variant="outlined"
