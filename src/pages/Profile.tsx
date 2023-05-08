@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import { logOutUser } from '../utils/logOutUser';
 
 const Profile = () => {
 	usePageTitle('My Profile');
@@ -33,6 +34,7 @@ const Profile = () => {
 					<Button
 						variant="contained"
 						onClick={() => {
+							logOutUser();
 							navigate({ to: '/' });
 						}}
 					>

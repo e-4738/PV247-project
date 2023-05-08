@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 import usePageTitle from '../hooks/usePageTitle';
@@ -38,7 +38,6 @@ const PlayQuiz = () => {
 			</Box>
 		</>
 	);
-
 };
 
 export default PlayQuiz;
