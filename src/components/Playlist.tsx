@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Box, Button, ButtonBase, Paper, Typography } from '@mui/material';
 import { FC } from 'react';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';
@@ -19,6 +19,8 @@ const Playlist: FC<Prop> = ({ playlist }) => (
 	>
 		<img src={playlist.images[0].url} alt="playlist_cover" width="100px" />
 		<Typography sx={{ textAlign: 'center' }}>{playlist.name}</Typography>
+		<Box sx={{ flexGrow: 1 }} />
+		<Button>Play</Button>
 	</Paper>
 );
 

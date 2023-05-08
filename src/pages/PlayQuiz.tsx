@@ -81,10 +81,18 @@ const PlayQuiz = () => {
 						</ToggleButton>
 					))}
 				</ToggleButtonGroup>
-				<Typography variant="h5">{categoryDescription[category]}</Typography>
+				<Typography sx={{ m: 2 }} variant="h5">
+					{categoryDescription[category]}
+				</Typography>
 			</Box>
 
-			<Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					justifyContent: 'center'
+				}}
+			>
 				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
 					<Playlist key={key} playlist={item} />
 				))}
