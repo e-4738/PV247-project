@@ -7,15 +7,14 @@ import TrackDetail from './TrackDetail';
 
 type Prop = {
 	score: number;
-	numberOfSongs: number;
 	tracks: PlaylistTrack[];
 };
 
-const GameResult: FC<Prop> = ({ score, numberOfSongs, tracks }) => (
+const GameResult: FC<Prop> = ({ score, tracks }) => (
 	<>
 		<Typography variant="h4">Game Results</Typography>
 		<Typography variant="h6">
-			Final score is: {score}/{numberOfSongs}.
+			Final score is: {score}/{tracks.length}.
 		</Typography>
 		<Box
 			sx={{

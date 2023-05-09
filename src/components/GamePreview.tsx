@@ -1,4 +1,4 @@
-import { Dispatch, FC } from 'react';
+import { FC } from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';

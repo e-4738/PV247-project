@@ -52,7 +52,7 @@ const Quiz = () => {
 			}}
 		/>
 	) : (
-		<GameResult score={score} numberOfSongs={activeQuestion} tracks={tracks} />
+		<GameResult score={score} tracks={tracks} />
 	);
 };
 
