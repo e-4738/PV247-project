@@ -31,6 +31,7 @@ import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Profile from './pages/Profile';
 import { logOutUser } from './utils/logOutUser';
+import Quiz from './components/Quiz';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -139,6 +140,13 @@ const notFoundRoute = new Route({
 	component: NotFound
 });
 
+// it works like this but not when i make it a child of playRoute ??
+const quizzesRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/quizzes/$playlistId',
+	component: Quiz
+});
+
 const routeTree = rootRoute.addChildren([
 	indexRoute,
 	playRoute,
@@ -146,7 +154,8 @@ const routeTree = rootRoute.addChildren([
 	leadeBoardRoute,
 	loginRoute,
 	profileRoute,
-	notFoundRoute
+	notFoundRoute,
+	quizzesRoute
 ]);
 
 const router = new Router({ routeTree });

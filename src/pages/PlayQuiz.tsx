@@ -10,7 +10,6 @@ import { SetStateAction, useState } from 'react';
 import usePageTitle from '../hooks/usePageTitle';
 import Playlist from '../components/Playlist';
 import useLoggedInUser from '../hooks/useLoggedInUser';
-import GamePreview from '../components/GamePreview';
 
 export type SpotifyPlaylist = {
 	id: string;
@@ -40,7 +39,6 @@ const PlayQuiz = () => {
 	};
 
 	const [category, setCategory] = useState<Category>('pop');
-	const [playlistId, setplaylistId] = useState<string>('');
 
 	const { data } = useQuery({
 		queryKey: [category],
@@ -62,7 +60,6 @@ const PlayQuiz = () => {
 	) => {
 		if (newCategory !== null) {
 			setCategory(newCategory);
-			setplaylistId('');
 		}
 	};
 
@@ -89,29 +86,17 @@ const PlayQuiz = () => {
 				</Typography>
 			</Box>
 
-			{!playlistId ? (
-				<Box
-					sx={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: 'center'
-					}}
-				>
-					{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
-						<Playlist key={key} playlist={item} openDetail={setplaylistId} />
-					))}
-				</Box>
-			) : (
-				<Box
-					sx={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: 'center'
-					}}
-				>
-					<GamePreview playlistId={playlistId} />
-				</Box>
-			)}
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					justifyContent: 'center'
+				}}
+			>
+				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
+					<Playlist key={key} playlist={item} />
+				))}
+			</Box>
 		</>
 	);
 };

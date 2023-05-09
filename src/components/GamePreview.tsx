@@ -1,40 +1,25 @@
 import { FC } from 'react';
-import { Button, Paper, Typography } from '@mui/material';
-import ReactAudioPlayer from 'react-audio-player';
+import { Paper, Typography } from '@mui/material';
 
-import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
+import { SpotifyPlaylist } from '../pages/PlayQuiz';
 
 type Prop = {
-	playlistId: string;
+	playlist: SpotifyPlaylist;
 };
 
-const GamePreview: FC<Prop> = ({ playlistId }) => {
-	const tracks: PlaylistTrack[] = usePlaylistsTracks(playlistId);
-	console.log(tracks);
-
-	const track = tracks?.[0].track.preview_url;
-
-	const printEnd = console.log('end');
-
-	return (
-		<Paper
-			sx={{ width: '100vh', p: 2, display: 'flex', flexDirection: 'column' }}
-		>
-			<Typography>
-				Here the details of the playlists will be alongside with prevoius game
-				stats and option to play
-			</Typography>
-			<Typography>{tracks?.[0].track.preview_url}</Typography>
-			<ReactAudioPlayer
-				src={track}
-				volume={0.3}
-				onEnded={() => printEnd}
-				autoPlay
-			/>
-			<Typography>Playlist id: {playlistId}</Typography>
-			<Button>Play!</Button>
-		</Paper>
-	);
-};
+// TODO: add previous quiz results
+const GamePreview: FC<Prop> = ({ playlist }) => (
+	<Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+		<img
+			src={playlist?.images[0].url}
+			alt="playlist_cover"
+			width="350px"
+			style={{ alignSelf: 'center', marginBottom: '30px' }}
+		/>
+		<Typography textAlign="center" variant="h4">
+			{playlist?.name}
+		</Typography>
+	</Paper>
+);
 
 export default GamePreview;

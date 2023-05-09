@@ -1,13 +1,13 @@
 import { Box, Button, Paper, Typography } from '@mui/material';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
+import { Link } from '@tanstack/react-router';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz.tsx';
 
 type Props = {
 	playlist: SpotifyPlaylist;
-	openDetail: Dispatch<SetStateAction<string>>;
 };
-const Playlist: FC<Props> = ({ playlist, openDetail }) => (
+const Playlist: FC<Props> = ({ playlist }) => (
 	<Paper
 		sx={{
 			m: 2,
@@ -21,7 +21,15 @@ const Playlist: FC<Props> = ({ playlist, openDetail }) => (
 		<img src={playlist.images[0].url} alt="playlist_cover" width="100px" />
 		<Typography sx={{ textAlign: 'center' }}>{playlist.name}</Typography>
 		<Box sx={{ flexGrow: 1 }} />
-		<Button onClick={() => openDetail(playlist.id)}>Play</Button>
+		<Link
+			style={{ textDecoration: 'none' }}
+			to="/quizzes/$playlistId"
+			params={{
+				playlistId: playlist.id
+			}}
+		>
+			<Button>Play</Button>
+		</Link>
 	</Paper>
 );
 

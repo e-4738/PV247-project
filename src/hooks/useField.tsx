@@ -6,8 +6,14 @@ const useField = (id: string, required?: boolean) => {
 
 	const error = required && touched && !value;
 
+	const reset = useCallback(() => {
+		setValue('');
+		setTouched(false);
+	}, []);
+
 	return {
 		value,
+		reset,
 		props: {
 			id,
 			value,
