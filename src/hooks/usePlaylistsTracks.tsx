@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import useLoggedInUser from './useLoggedInUser';
 
@@ -32,9 +33,19 @@ const usePlaylistsTracks = (playlistId: string): Array<PlaylistTrack> => {
 			}).then(res => res.json())
 	});
 
-	return data?.tracks?.items
-		.filter((playlistTrack: PlaylistTrack) => playlistTrack.track.preview_url)
-		.slice(0, 10);
+	const shuffleTracks = useCallback((tracks: PlaylistTrack[]) => {
+		for (let i = tracks?.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[tracks[i], tracks[j]] = [tracks[j], tracks[i]];
+		}
+		return tracks;
+	}, []);
+
+	return shuffleTracks(
+		data?.tracks?.items
+			.filter((playlistTrack: PlaylistTrack) => playlistTrack.track.preview_url)
+			.slice(0, 10)
+	);
 };
 
 export default usePlaylistsTracks;
