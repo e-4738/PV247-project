@@ -1,14 +1,15 @@
-import { FC } from 'react';
-import { Paper, Typography } from '@mui/material';
+import { Dispatch, FC } from 'react';
+import { Button, Paper, Typography } from '@mui/material';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
 
 type Prop = {
 	playlist: SpotifyPlaylist;
+	onGameStart: () => void;
 };
 
 // TODO: add previous quiz results
-const GamePreview: FC<Prop> = ({ playlist }) => (
+const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => (
 	<Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
 		<img
 			src={playlist?.images[0].url}
@@ -19,6 +20,12 @@ const GamePreview: FC<Prop> = ({ playlist }) => (
 		<Typography textAlign="center" variant="h4">
 			{playlist?.name}
 		</Typography>
+		<Typography textAlign="center" variant="subtitle1">
+			{playlist?.description}
+		</Typography>
+		<Button variant="contained" onClick={onGameStart}>
+			<Typography variant="h6">Play</Typography>
+		</Button>
 	</Paper>
 );
 

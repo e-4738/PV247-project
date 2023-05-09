@@ -42,12 +42,7 @@ const Quiz = () => {
 	console.log(tracks);
 
 	return !started ? (
-		<>
-			<GamePreview playlist={data} />
-			<Button variant="contained" onClick={() => setStarted(true)}>
-				<Typography variant="h6">Play</Typography>
-			</Button>
-		</>
+		<GamePreview playlist={data} onGameStart={() => setStarted(true)} />
 	) : !finished ? (
 		<QuizQuestion
 			playlistTrack={tracks[activeQuestion]}

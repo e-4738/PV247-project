@@ -14,6 +14,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 export type SpotifyPlaylist = {
 	id: string;
 	name: string;
+	description: string;
 	images: Array<{
 		url: string;
 	}>;
