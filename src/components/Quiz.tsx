@@ -1,4 +1,3 @@
-import { Button, Typography } from '@mui/material';
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -9,6 +8,7 @@ import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
 
 import GamePreview from './GamePreview';
 import QuizQuestion from './QuizQuestion';
+import GameResult from './GameResult';
 
 const Quiz = () => {
 	usePageTitle('Quiz');
@@ -52,9 +52,7 @@ const Quiz = () => {
 			}}
 		/>
 	) : (
-		<Typography>
-			Final score is: {score}/{activeQuestion}.
-		</Typography>
+		<GameResult score={score} numberOfSongs={activeQuestion} tracks={tracks} />
 	);
 };
 
