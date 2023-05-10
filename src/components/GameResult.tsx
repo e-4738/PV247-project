@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { Link } from '@tanstack/react-router';
 import { FC } from 'react';
 
 import { PlaylistTrack } from '../hooks/usePlaylistsTracks';
@@ -29,6 +30,11 @@ const GameResult: FC<Prop> = ({ score, tracks }) => (
 				<TrackDetail key={i} playlistTrack={playlistTrack} position={i + 1} />
 			))}
 		</Box>
+		<Link style={{ textDecoration: 'none' }} to="/play">
+			<Button variant="contained">
+				<Typography>Back to playlists</Typography>
+			</Button>
+		</Link>
 	</>
 );
 

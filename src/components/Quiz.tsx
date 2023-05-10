@@ -1,6 +1,7 @@
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
+import { Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -19,7 +20,7 @@ const Quiz = () => {
 	const user = useLoggedInUser();
 
 	const { playlistId } = useParams();
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: [playlistId],
 		queryFn: () =>
 			fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
@@ -38,7 +39,11 @@ const Quiz = () => {
 	);
 
 	return !started ? (
-		<GamePreview playlist={data} onGameStart={() => setStarted(true)} />
+		isLoading ? (
+			<Typography variant="h4">loading game data...</Typography>
+		) : (
+			<GamePreview playlist={data} onGameStart={() => setStarted(true)} />
+		)
 	) : !finished ? (
 		<QuizQuestion
 			playlistTrack={tracks[activeQuestion]}
