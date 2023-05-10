@@ -65,7 +65,7 @@ const QuizQuestion: FC<Prop> = ({ playlistTrack, onNext, onCorrect }) => {
 				handleClick={() => {
 					setGuessed(false);
 					if (isInputCorrect()) {
-						onCorrect();
+						onCorrect(100 - 3 * (30 - seconds));
 					}
 					song.reset();
 					setSeconds(30);

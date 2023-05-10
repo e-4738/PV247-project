@@ -14,7 +14,7 @@ const GameResult: FC<Prop> = ({ score, tracks }) => (
 	<>
 		<Typography variant="h4">Game Results</Typography>
 		<Typography variant="h6">
-			Final score is: {score}/{tracks.length}.
+			Final score is: {score}/{tracks.length * 100}.
 		</Typography>
 		<Box
 			sx={{

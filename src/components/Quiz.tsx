@@ -45,8 +45,8 @@ const Quiz = () => {
 			onNext={() => {
 				setActiveQuestion(prev => prev + 1);
 			}}
-			onCorrect={() => {
-				setScore(prev => prev + 1);
+			onCorrect={(points: number) => {
+				setScore(prev => prev + points);
 			}}
 		/>
 	) : (
