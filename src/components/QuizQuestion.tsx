@@ -1,5 +1,5 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-import { FC, FormEvent, useState } from 'react';
+import { Box } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 
 import { PlaylistTrack } from '../hooks/usePlaylistsTracks';
@@ -7,6 +7,7 @@ import useField from '../hooks/useField';
 
 import GuessedTrack from './GuessedTrack';
 import { SkipNextButton } from './MusicButtons';
+import QuizTrack from './QuizTrack';
 
 type Prop = {
 	playlistTrack: PlaylistTrack;
@@ -17,9 +18,22 @@ type Prop = {
 const QuizQuestion: FC<Prop> = ({ playlistTrack, onNext, onCorrect }) => {
 	const song = useField('song', false);
 	const [guessed, setGuessed] = useState(false);
+	const [seconds, setSeconds] = useState<number>(30);
 
 	const isInputCorrect = (): boolean =>
 		playlistTrack.track.name.toLowerCase() === song.value.trim().toLowerCase();
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setSeconds(prevSeconds => prevSeconds - 1);
+		}, 1000);
+
+		!seconds && setGuessed(true);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, [seconds]);
 
 	return (
 		<Box
@@ -29,59 +43,12 @@ const QuizQuestion: FC<Prop> = ({ playlistTrack, onNext, onCorrect }) => {
 			}}
 		>
 			{!guessed ? (
-				// TODO: make this into another component? too long
-				<Paper
-					component="form"
-					onSubmit={(e: FormEvent) => {
-						e.preventDefault();
-						setGuessed(true);
-					}}
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						p: 4,
-						paddingBottom: 8,
-						width: '500px'
-					}}
-				>
-					<Typography
-						variant="h5"
-						sx={{
-							paddingBottom: '50px'
-						}}
-					>
-						You have one guess!
-					</Typography>
-					<img
-						src={playlistTrack.track.album.images[0].url}
-						alt="album_cover"
-						width="400px"
-						style={{
-							filter: 'blur(10px)',
-							background: 'linear-gradient(to bottom, transparent, black)',
-							opacity: '0.5'
-						}}
-					/>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'row',
-							paddingTop: '30px'
-						}}
-					>
-						{' '}
-						<TextField
-							label="song"
-							variant="standard"
-							placeholder=""
-							{...song.props}
-						/>
-						<Button type="submit" variant="contained">
-							Guess
-						</Button>
-					</Box>
-				</Paper>
+				<QuizTrack
+					onAnswearSubmit={() => setGuessed(true)}
+					albumImage={playlistTrack.track.album.images[0].url}
+					songField={song}
+					seconds={seconds}
+				/>
 			) : (
 				<GuessedTrack track={playlistTrack} isCorrect={isInputCorrect()} />
 			)}
@@ -101,6 +68,7 @@ const QuizQuestion: FC<Prop> = ({ playlistTrack, onNext, onCorrect }) => {
 						onCorrect();
 					}
 					song.reset();
+					setSeconds(30);
 					onNext();
 				}}
 			/>

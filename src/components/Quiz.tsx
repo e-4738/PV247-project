@@ -15,7 +15,6 @@ const Quiz = () => {
 	const [started, setStarted] = useState<boolean>(false);
 	const [activeQuestion, setActiveQuestion] = useState<number>(0);
 	const [score, setScore] = useState<number>(0);
-	const [duration, setDuration] = useState<number>(0);
 
 	const user = useLoggedInUser();
 
