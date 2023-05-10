@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import useLoggedInUser from './useLoggedInUser';
 
@@ -18,6 +19,14 @@ export type PlaylistTrack = {
 	};
 };
 
+const shuffleTracks = (tracks: PlaylistTrack[]) => {
+	for (let i = tracks?.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[tracks[i], tracks[j]] = [tracks[j], tracks[i]];
+	}
+	return tracks;
+};
+
 const usePlaylistsTracks = (playlistId: string): Array<PlaylistTrack> => {
 	const user = useLoggedInUser();
 
@@ -32,9 +41,17 @@ const usePlaylistsTracks = (playlistId: string): Array<PlaylistTrack> => {
 			}).then(res => res.json())
 	});
 
-	return data?.tracks?.items
-		.filter((playlistTrack: PlaylistTrack) => playlistTrack.track.preview_url)
-		.slice(0, 10);
+	const tracks: PlaylistTrack[] = useMemo(
+		() =>
+			shuffleTracks(
+				data?.tracks?.items.filter(
+					(playlistTrack: PlaylistTrack) => playlistTrack.track.preview_url
+				)
+			)?.slice(0, 10),
+		[data]
+	);
+
+	return tracks;
 };
 
 export default usePlaylistsTracks;
