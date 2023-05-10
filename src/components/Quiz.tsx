@@ -1,6 +1,6 @@
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -16,15 +16,8 @@ const Quiz = () => {
 	const [activeQuestion, setActiveQuestion] = useState<number>(0);
 	const [score, setScore] = useState<number>(0);
 	const [duration, setDuration] = useState<number>(0);
-	const [finished, setFinished] = useState(false);
 
 	const user = useLoggedInUser();
-
-	useEffect(() => {
-		if (tracks && activeQuestion === tracks.length - 1) {
-			setFinished(true);
-		}
-	}, [activeQuestion]);
 
 	const { playlistId } = useParams();
 	const { data } = useQuery({
@@ -39,14 +32,20 @@ const Quiz = () => {
 	});
 
 	const tracks: PlaylistTrack[] = usePlaylistsTracks(playlistId);
-	console.log(tracks);
+
+	const finished = useMemo(
+		() => activeQuestion === tracks?.length,
+		[activeQuestion]
+	);
 
 	return !started ? (
 		<GamePreview playlist={data} onGameStart={() => setStarted(true)} />
 	) : !finished ? (
 		<QuizQuestion
 			playlistTrack={tracks[activeQuestion]}
-			onNext={() => setActiveQuestion(prev => prev + 1)}
+			onNext={() => {
+				setActiveQuestion(prev => prev + 1);
+			}}
 			onCorrect={() => {
 				setScore(prev => prev + 1);
 			}}
