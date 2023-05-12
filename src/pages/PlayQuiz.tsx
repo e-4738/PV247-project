@@ -20,7 +20,7 @@ export type SpotifyPlaylist = {
 	}>;
 };
 
-type Category = 'pop' | 'alternative' | 'mood' | 'decades' | 'party';
+type Category = 'pop' | 'alternative' | 'mood' | 'decades' | 'party' | 'mine';
 
 type CategoryDescription = Record<Category, string>;
 
@@ -36,23 +36,28 @@ const PlayQuiz = () => {
 		decades:
 			'Travel through time and guess the iconic hits from different decades.',
 		party:
-			'Get the party started and see if you can guess the songs from these upbeat party anthems.'
+			'Get the party started and see if you can guess the songs from these upbeat party anthems.',
+		mine: 'Test your knowledge of the songs from your own playlists.'
 	};
 
 	const [category, setCategory] = useState<Category>('pop');
 
+	console.log(user);
 	const { data } = useQuery({
 		queryKey: [category],
-		queryFn: () =>
-			fetch(
-				`https://api.spotify.com/v1/browse/categories/${category}/playlists`,
-				{
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${user?.accessToken}`
+		queryFn: () => {
+			let queryString = category === 'mine' ? `https://api.spotify.com/v1/me/playlists` :
+				`https://api.spotify.com/v1/browse/categories/${category}/playlists`
+			return	fetch(
+					queryString,
+					{
+						method: 'GET',
+						headers: {
+							Authorization: `Bearer ${user?.accessToken}`
+						}
 					}
-				}
-			).then(res => res.json())
+				).then(res => res.json()).then(res => category ==='mine' ? res : res?.playlists)
+		}
 	});
 
 	const changeCategory = (
@@ -94,7 +99,7 @@ const PlayQuiz = () => {
 					justifyContent: 'center'
 				}}
 			>
-				{data?.playlists?.items?.map((item: SpotifyPlaylist, key: number) => (
+				{data?.items?.map((item: SpotifyPlaylist, key: number) => (
 					<Playlist key={key} playlist={item} />
 				))}
 			</Box>
