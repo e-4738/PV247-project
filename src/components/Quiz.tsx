@@ -1,7 +1,6 @@
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import { Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -10,6 +9,7 @@ import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
 import GamePreview from './GamePreview';
 import QuizQuestion from './QuizQuestion';
 import GameResult from './GameResult';
+import LoadingScreen from './LoadingScreen';
 
 type GuessResult = { result: boolean };
 
@@ -35,7 +35,7 @@ const Quiz = () => {
 			}).then(res => res.json())
 	});
 
-	const tracks: GameTrack[] = usePlaylistsTracks(playlistId) as GameTrack[]
+	const tracks: GameTrack[] = usePlaylistsTracks(playlistId) as GameTrack[];
 
 	const finished = useMemo(
 		() => activeQuestion === tracks?.length,
@@ -44,7 +44,7 @@ const Quiz = () => {
 
 	return !started ? (
 		isLoading ? (
-			<Typography variant="h4">loading game data...</Typography>
+			<LoadingScreen />
 		) : (
 			<GamePreview playlist={data} onGameStart={() => setStarted(true)} />
 		)

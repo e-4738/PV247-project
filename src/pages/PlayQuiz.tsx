@@ -10,6 +10,7 @@ import { SetStateAction, useState } from 'react';
 import usePageTitle from '../hooks/usePageTitle';
 import Playlist from '../components/Playlist';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import LoadingScreen from '../components/LoadingScreen';
 
 export type SpotifyPlaylist = {
 	id: string;
@@ -42,20 +43,21 @@ const PlayQuiz = () => {
 
 	const [category, setCategory] = useState<Category>('pop');
 
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: [category],
 		queryFn: () => {
-			let queryString = category === 'mine' ? `https://api.spotify.com/v1/me/playlists` :
-				`https://api.spotify.com/v1/browse/categories/${category}/playlists`
-			return	fetch(
-					queryString,
-					{
-						method: 'GET',
-						headers: {
-							Authorization: `Bearer ${user?.accessToken}`
-						}
-					}
-				).then(res => res.json()).then(res => category ==='mine' ? res : res?.playlists)
+			const queryString =
+				category === 'mine'
+					? `https://api.spotify.com/v1/me/playlists`
+					: `https://api.spotify.com/v1/browse/categories/${category}/playlists`;
+			return fetch(queryString, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user?.accessToken}`
+				}
+			})
+				.then(res => res.json())
+				.then(res => (category === 'mine' ? res : res?.playlists));
 		}
 	});
 
@@ -90,7 +92,6 @@ const PlayQuiz = () => {
 					{categoryDescription[category]}
 				</Typography>
 			</Box>
-
 			<Box
 				sx={{
 					display: 'flex',
@@ -98,9 +99,13 @@ const PlayQuiz = () => {
 					justifyContent: 'center'
 				}}
 			>
-				{data?.items?.map((item: SpotifyPlaylist, key: number) => (
-					<Playlist key={key} playlist={item} />
-				))}
+				{isLoading ? (
+					<LoadingScreen />
+				) : (
+					data?.items?.map((item: SpotifyPlaylist, key: number) => (
+						<Playlist key={key} playlist={item} />
+					))
+				)}
 			</Box>
 		</>
 	);
