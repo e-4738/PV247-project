@@ -3,7 +3,10 @@ import {
 	collection,
 	CollectionReference,
 	getFirestore,
+	QuerySnapshot,
 	query,
+	orderBy,
+	limit,
 	where,
 	getDocs
 } from 'firebase/firestore';
@@ -36,26 +39,27 @@ export const gamesCollection = collection(
 	'games'
 ) as CollectionReference<Game>;
 
+const getGamesFromSnapshot = (querySnapshot: QuerySnapshot<Game>): Game[] => {
+	const games: Game[] = querySnapshot.docs.map(doc => doc.data() as Game);
+
+	console.log(games);
+	return games;
+};
+
 export const getUsersGames = async (userId: string) => {
 	const q = query(gamesCollection, where('spotifyUserId', '==', userId));
 	const querySnapshot = await getDocs(q);
 
-	const games: Game[] = [];
-	querySnapshot.forEach((doc: any) => {
-		console.log(doc.id, ' => ', doc.data());
+	return getGamesFromSnapshot(querySnapshot);
+};
 
-		const game: Game = {
-			spotifyUserId: doc.get('spotifyUserId'),
-			spotifyDisplayName: doc.get('spotifyDisplayName'),
-			spotifyUserProfileLink: doc.get('spotifyUserProfileLink'),
-			userProfilePictureLink: doc.get('userProfilePictureLink'),
-			playlistId: doc.get('playlistId'),
-			score: doc('score'),
-			maxScore: doc.get('maxScore')
-		};
+export const getTopTenGames = async () => {
+	const topTenGamesQuery = query(
+		gamesCollection,
+		orderBy('score', 'desc'),
+		limit(10)
+	);
+	const snapshot = await getDocs(topTenGamesQuery);
 
-		games.push(game);
-	});
-
-	return games;
+	return getGamesFromSnapshot(snapshot);
 };

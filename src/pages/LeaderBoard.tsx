@@ -1,12 +1,20 @@
 import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 import usePageTitle from '../hooks/usePageTitle';
 import LeaderBoardItem from '../components/LeaderBoardItem';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import { Game, getTopTenGames } from '../firebase';
 
 const LeaderBoard = () => {
 	usePageTitle('Leader Board');
 	const user = useLoggedInUser();
+	const [topGames, setTopGames] = useState<Game[]>([]);
+
+	useEffect(() => {
+		getTopTenGames().then(games => setTopGames(games));
+	}, []);
+
 	return (
 		<>
 			<Typography variant="h4" textAlign="center">
@@ -23,17 +31,18 @@ const LeaderBoard = () => {
 						gap: 2
 					}}
 				>
-					{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((position, key) => (
+					{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((position, key) => (
 						<LeaderBoardItem
 							key={key}
 							position={position}
-							playerName={user?.displayName}
-							playerAvatarLink={user.image}
-							playerSpotifyProfileLink={user.profileLink}
-							playlistName="my life is a movie"
-							playlistLink="https://open.spotify.com/playlist/37i9dQZF1DX4OzrY981I1W"
-							gameScore={7}
-							gameDuration={12000}
+							playerName={topGames[position]?.spotifyDisplayName}
+							playerAvatarLink={topGames[position]?.userProfilePictureLink}
+							playerSpotifyProfileLink={
+								topGames[position]?.spotifyUserProfileLink
+							}
+							playlistId={topGames[position]?.playlistId}
+							gameScore={topGames[position]?.score}
+							gameMaxScore={topGames[position]?.maxScore}
 						/>
 					))}
 				</Box>

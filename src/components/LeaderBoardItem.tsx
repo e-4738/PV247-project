@@ -1,18 +1,20 @@
-import { Avatar, Box, Link, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 
-import { convertGameTime } from '../utils/convertMsToHMS';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import { SpotifyPlaylist } from '../pages/PlayQuiz';
 
 type Props = {
 	position: number;
 	playerName: string;
 	playerAvatarLink: string;
 	playerSpotifyProfileLink: string;
-	playlistName: string;
-	playlistLink: string;
+	playlistId: string;
 	gameScore: number;
-	gameDuration: number;
+	gameMaxScore: number;
 };
 
 const LeaderBoardItem: FC<Props> = ({
@@ -20,88 +22,97 @@ const LeaderBoardItem: FC<Props> = ({
 	playerName,
 	playerAvatarLink,
 	playerSpotifyProfileLink,
-	playlistName,
-	playlistLink,
+	playlistId,
 	gameScore,
-	gameDuration
-}) => (
-	<Paper
-		sx={{
-			p: 2,
-			display: 'flex',
-			width: '80%',
-			flexDirection: 'row',
-			alignItems: 'center'
-		}}
-	>
-		<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
-			#{position}
-		</Typography>
-		<Link href={playerSpotifyProfileLink} sx={{ display: 'flex' }}>
-			<Avatar src={playerAvatarLink} sx={{ width: 45, height: 45, ml: 2 }} />
-		</Link>
-		<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600, ml: 2 }}>
-			{playerName}
-		</Typography>
+	gameMaxScore
+}) => {
+	const user = useLoggedInUser();
+	const [playlist, setPlaylist] = useState<SpotifyPlaylist>();
 
-		<Box
+	const { data, isLoading } = useQuery({
+		queryKey: [playlistId],
+		queryFn: () =>
+			fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${user?.accessToken}`
+				}
+			}).then(res => res.json())
+	});
+
+	useEffect(() => {
+		setPlaylist(data);
+	}, [data]);
+
+	return (
+		<Paper
 			sx={{
-				display: 'flex',
-				flexDirection: 'row',
-				alignItems: 'flex-end'
+				p: 2,
+				display: 'space-between',
+				width: '80%',
+				flexDirection: 'row'
 			}}
 		>
+			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
+				#{position + 1}
+			</Typography>
+			<Link href={playerSpotifyProfileLink} sx={{ display: 'flex' }}>
+				<Avatar src={playerAvatarLink} sx={{ width: 45, height: 45, ml: 2 }} />
+			</Link>
+			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600, ml: 2 }}>
+				{playerName}
+			</Typography>
+
 			<Box
 				sx={{
 					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					ml: 8
+					flexDirection: 'row',
+					alignItems: 'flex-center'
 				}}
 			>
-				<Typography
-					variant="body1"
-					color="secondary"
-					sx={{ fontSize: 28, fontWeight: 600 }}
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						ml: 8
+					}}
 				>
-					{gameScore}/10
-				</Typography>
-				<Typography color={grey[500]} variant="overline">
-					Score
-				</Typography>
-			</Box>
+					<Typography
+						variant="body1"
+						color="secondary"
+						sx={{ fontSize: 28, fontWeight: 600 }}
+					>
+						{gameScore}/{gameMaxScore}
+					</Typography>
+					<Typography color={grey[500]} variant="overline">
+						Score
+					</Typography>
+				</Box>
 
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					ml: 6
-				}}
-			>
-				<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
-					{convertGameTime(gameDuration)}
-				</Typography>
-				<Typography color={grey[500]} variant="overline">
-					Duration
-				</Typography>
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						ml: 6
+					}}
+				>
+					<Link
+						to="/quizzes/$playlistId"
+						params={{
+							playlistId
+						}}
+					>
+						{playlist?.name}
+					</Link>
+					<Typography color={grey[500]} variant="overline">
+						Playlist
+					</Typography>
+				</Box>
 			</Box>
-
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					ml: 6
-				}}
-			>
-				<Link href={playlistLink}>{playlistName}</Link>
-				<Typography color={grey[500]} variant="overline">
-					Playlist
-				</Typography>
-			</Box>
-		</Box>
-	</Paper>
-);
+		</Paper>
+	);
+};
 
 export default LeaderBoardItem;
