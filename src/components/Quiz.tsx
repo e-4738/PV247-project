@@ -1,10 +1,12 @@
 import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { addDoc } from 'firebase/firestore';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
+import { gamesCollection } from '../firebase';
 
 import GamePreview from './GamePreview';
 import QuizQuestion from './QuizQuestion';
@@ -41,6 +43,24 @@ const Quiz = () => {
 		() => activeQuestion === tracks?.length,
 		[activeQuestion]
 	);
+
+	useEffect(() => {
+		const saveGame = async () => {
+			await addDoc(gamesCollection, {
+				spotifyUserId: user?.spotifyUserId ?? '',
+				spotifyDisplayName: user?.displayName ?? '',
+				spotifyUserProfileLink: user?.profileLink ?? '',
+				userProfilePictureLink: user?.image ?? '',
+				playlistId,
+				score,
+				maxScore: tracks?.length * 100
+			});
+		};
+
+		if (finished) {
+			saveGame().then(() => console.log('game saved to db'));
+		}
+	}, [activeQuestion]);
 
 	return !started ? (
 		isLoading ? (

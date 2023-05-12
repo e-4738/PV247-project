@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app';
 import {
 	collection,
 	CollectionReference,
-	doc,
-	DocumentReference,
 	getFirestore,
 	query,
 	where,
@@ -28,19 +26,15 @@ export type Game = {
 	spotifyDisplayName: string;
 	spotifyUserProfileLink: string;
 	userProfilePictureLink: string;
-	playlistName: string;
-	playlistLink: string;
+	playlistId: string;
 	score: number;
-	duration: number;
+	maxScore: number;
 };
 
 export const gamesCollection = collection(
 	db,
 	'games'
 ) as CollectionReference<Game>;
-
-export const gameDocument = (id: string) =>
-	doc(db, 'games', id) as DocumentReference<Game>;
 
 export const getUsersGames = async (userId: string) => {
 	const q = query(gamesCollection, where('spotifyUserId', '==', userId));
@@ -55,10 +49,9 @@ export const getUsersGames = async (userId: string) => {
 			spotifyDisplayName: doc.get('spotifyDisplayName'),
 			spotifyUserProfileLink: doc.get('spotifyUserProfileLink'),
 			userProfilePictureLink: doc.get('userProfilePictureLink'),
-			playlistName: doc.get('playlistName'),
-			playlistLink: doc.get('playlistLink'),
+			playlistId: doc.get('playlistId'),
 			score: doc('score'),
-			duration: doc.get('duration')
+			maxScore: doc.get('maxScore')
 		};
 
 		games.push(game);
