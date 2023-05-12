@@ -1,15 +1,11 @@
 import { Avatar, Button, Paper, Typography } from '@mui/material';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { useNavigate } from '@tanstack/react-router';
 import { grey } from '@mui/material/colors';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
-import { logOutUser } from '../utils/logOutUser';
 
 const Profile = () => {
 	usePageTitle('My Profile');
-	const navigate = useNavigate();
 	const user = useLoggedInUser();
 	return (
 		<Paper
@@ -47,18 +43,6 @@ const Profile = () => {
 			<Typography color={grey[600]} variant="overline">
 				Spotify ID: {user?.spotifyUserId}
 			</Typography>
-
-			<Button
-				variant="contained"
-				onClick={() => {
-					logOutUser();
-					navigate({ to: '/' });
-				}}
-				sx={{ mt: 6 }}
-			>
-				Logout
-				<LogoutRoundedIcon sx={{ ml: 1 }} />
-			</Button>
 		</Paper>
 	);
 };

@@ -25,7 +25,6 @@ import Home from './pages/Home';
 import YourMatches from './pages/YourMatches';
 import PlayQuiz from './pages/PlayQuiz';
 import LeaderBoard from './pages/LeaderBoard';
-import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
@@ -50,16 +49,9 @@ const rootRoute = new RootRoute({
 									<ButtonLink to="/play">Play</ButtonLink>
 									<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
 									<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
-								</>
-							)}
-							<Box sx={{ flexGrow: 1 }} />
-							{!user ? (
-								<ButtonLink variant="outlined" to="/login">
-									LogIn
-									<LoginRoundedIcon sx={{ ml: 1 }} />
-								</ButtonLink>
-							) : (
-								<>
+
+									<Box sx={{ flexGrow: 1 }} />
+
 									<ButtonLink to="/profile">
 										<Avatar sx={{ width: 35, height: 35 }} src={user.image} />
 									</ButtonLink>
@@ -122,12 +114,6 @@ const leadeBoardRoute = new Route({
 	component: LeaderBoard
 });
 
-const loginRoute = new Route({
-	getParentRoute: () => rootRoute,
-	path: '/login',
-	component: Login
-});
-
 const profileRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '/profile',
@@ -152,7 +138,6 @@ const routeTree = rootRoute.addChildren([
 	playRoute,
 	yourMatchesRoute,
 	leadeBoardRoute,
-	loginRoute,
 	profileRoute,
 	notFoundRoute,
 	quizzesRoute
