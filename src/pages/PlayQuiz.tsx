@@ -42,7 +42,6 @@ const PlayQuiz = () => {
 
 	const [category, setCategory] = useState<Category>('pop');
 
-	console.log(user);
 	const { data } = useQuery({
 		queryKey: [category],
 		queryFn: () => {

@@ -2,15 +2,15 @@ import { Grid, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { FC } from 'react';
 
-import { PlaylistTrack } from '../hooks/usePlaylistsTracks';
+import {GameTrack} from "./Quiz.tsx";
 
 type Prop = {
 	position: number;
-	playlistTrack: PlaylistTrack;
+	gameTrack: GameTrack;
 };
 
-const TrackDetail: FC<Prop> = ({ position, playlistTrack }) => (
-	<Paper sx={{ width: '90%' }}>
+const TrackDetail: FC<Prop> = ({ position, gameTrack }) => (
+	<Paper sx={{ width: '90%', backgroundColor: gameTrack.result ? "green" : "red" }}>
 		<Grid container sx={{ alignItems: 'center' }}>
 			<Grid
 				item
@@ -28,12 +28,12 @@ const TrackDetail: FC<Prop> = ({ position, playlistTrack }) => (
 					#{position}
 				</Typography>
 				<img
-					src={playlistTrack.track.album.images[0]?.url}
+					src={gameTrack.track.album.images[0]?.url}
 					alt="album_cover"
 					width="100px"
 				/>
 				<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
-					{playlistTrack.track.name}
+					{gameTrack.track.name}
 				</Typography>
 			</Grid>
 
@@ -53,7 +53,7 @@ const TrackDetail: FC<Prop> = ({ position, playlistTrack }) => (
 					textAlign="center"
 					sx={{ fontSize: 28, fontWeight: 600 }}
 				>
-					{playlistTrack.track.artists[0]?.name}
+					{gameTrack.track.artists[0]?.name}
 				</Typography>
 				<Typography color={grey[500]} variant="overline">
 					Artist
@@ -75,7 +75,7 @@ const TrackDetail: FC<Prop> = ({ position, playlistTrack }) => (
 					textAlign="center"
 					sx={{ fontSize: 28, fontWeight: 600 }}
 				>
-					{playlistTrack.track.album.name}
+					{gameTrack.track.album.name}
 				</Typography>
 				<Typography color={grey[500]} variant="overline">
 					Album

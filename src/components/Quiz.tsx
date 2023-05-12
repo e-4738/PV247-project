@@ -11,6 +11,10 @@ import GamePreview from './GamePreview';
 import QuizQuestion from './QuizQuestion';
 import GameResult from './GameResult';
 
+type GuessResult = { result: boolean };
+
+export type GameTrack = PlaylistTrack & GuessResult;
+
 const Quiz = () => {
 	usePageTitle('Quiz');
 	const [started, setStarted] = useState<boolean>(false);
@@ -31,7 +35,7 @@ const Quiz = () => {
 			}).then(res => res.json())
 	});
 
-	const tracks: PlaylistTrack[] = usePlaylistsTracks(playlistId);
+	const tracks: GameTrack[] = usePlaylistsTracks(playlistId) as GameTrack[]
 
 	const finished = useMemo(
 		() => activeQuestion === tracks?.length,
@@ -46,12 +50,15 @@ const Quiz = () => {
 		)
 	) : !finished ? (
 		<QuizQuestion
-			playlistTrack={tracks[activeQuestion]}
+			gameTrack={tracks[activeQuestion]}
 			onNext={() => {
 				setActiveQuestion(prev => prev + 1);
 			}}
-			onCorrect={(points: number) => {
-				setScore(prev => prev + points);
+			onCorrect={(result: boolean, points: number) => {
+				if (result) {
+					setScore(prev => prev + points);
+					tracks[activeQuestion].result = true;
+				}
 			}}
 		/>
 	) : (

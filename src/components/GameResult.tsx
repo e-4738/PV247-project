@@ -27,7 +27,7 @@ const GameResult: FC<Prop> = ({ score, tracks }) => (
 			}}
 		>
 			{tracks.map((playlistTrack, i) => (
-				<TrackDetail key={i} playlistTrack={playlistTrack} position={i + 1} />
+				<TrackDetail key={i} gameTrack={playlistTrack} position={i + 1} />
 			))}
 		</Box>
 		<Link style={{ textDecoration: 'none' }} to="/play">

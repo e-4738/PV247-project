@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Link, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Link, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { FC } from 'react';
 
