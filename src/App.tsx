@@ -66,8 +66,8 @@ const rootRoute = new RootRoute({
 									<Button
 										variant="outlined"
 										onClick={() => {
-											logOutUser();
 											navigate({ to: '/' });
+											logOutUser();
 										}}
 									>
 										Logout

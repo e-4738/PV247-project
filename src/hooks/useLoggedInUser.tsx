@@ -26,7 +26,9 @@ type SpotifyUser = {
 const UserContext = createContext<SpotifyUser | undefined>(undefined);
 
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
-	const [accessToken, setAccessToken] = useState<string>();
+	const [accessToken, setAccessToken] = useState<string>(
+		localStorage.getItem('access_token') ?? ''
+	);
 	const [user, setUser] = useState<SpotifyUser>();
 
 	useEffect(() => {
