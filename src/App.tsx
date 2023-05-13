@@ -22,7 +22,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { theme } from './theme';
 import Home from './pages/Home';
-import YourMatches from './pages/YourMatches';
+import YourGames from './pages/YourGames';
 import PlayQuiz from './pages/PlayQuiz';
 import LeaderBoard from './pages/LeaderBoard';
 import NotFound from './pages/NotFound';
@@ -47,7 +47,7 @@ const rootRoute = new RootRoute({
 							{user && (
 								<>
 									<ButtonLink to="/play">Play</ButtonLink>
-									<ButtonLink to="/yourmatches">Your Matches</ButtonLink>
+									<ButtonLink to="/yourgames">Your Games</ButtonLink>
 									<ButtonLink to="/leaderboard">Leader Board</ButtonLink>
 
 									<Box sx={{ flexGrow: 1 }} />
@@ -102,10 +102,10 @@ const playRoute = new Route({
 	component: PlayQuiz
 });
 
-const yourMatchesRoute = new Route({
+const yourGamesRoute = new Route({
 	getParentRoute: () => rootRoute,
-	path: '/yourmatches',
-	component: YourMatches
+	path: '/yourgames',
+	component: YourGames
 });
 
 const leadeBoardRoute = new Route({
@@ -136,7 +136,7 @@ const quizzesRoute = new Route({
 const routeTree = rootRoute.addChildren([
 	indexRoute,
 	playRoute,
-	yourMatchesRoute,
+	yourGamesRoute,
 	leadeBoardRoute,
 	profileRoute,
 	notFoundRoute,
