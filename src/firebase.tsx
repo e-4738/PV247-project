@@ -63,3 +63,15 @@ export const getTopTenGames = async () => {
 
 	return getGamesFromSnapshot(snapshot);
 };
+
+export const getTopThreeGamesForPlaylist = async (playlistId: string) => {
+	const topThreeForPlaylist = query(
+		gamesCollection,
+		where('playlistId', '==', playlistId),
+		orderBy('score', 'desc'),
+		limit(3)
+	);
+	const snapshot = await getDocs(topThreeForPlaylist);
+
+	return getGamesFromSnapshot(snapshot);
+};

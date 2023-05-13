@@ -1,63 +1,96 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button, Grid, Paper, Typography } from '@mui/material';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
+import { Game, getTopThreeGamesForPlaylist } from '../firebase';
+
+import PlaylistLeaderBoardItem from './PlaylistLeaderBoardItem';
+import LoadingScreen from './LoadingScreen';
 
 type Prop = {
 	playlist: SpotifyPlaylist;
 	onGameStart: () => void;
 };
 
-// TODO: add previous quiz results
-const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => (
-	<>
-		<Paper sx={{ p: 2, width: '100%' }}>
-			<Grid container spacing={2}>
-				<Grid
-					item
-					md={6}
-					xs={12}
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center'
-					}}
-				>
-					<img
-						src={playlist?.images[0].url}
-						alt="playlist_cover"
-						width="350px"
-						style={{ alignSelf: 'center', marginBottom: '30px' }}
-					/>
-					<Typography textAlign="center" variant="h4">
-						{playlist?.name}
-					</Typography>
-					<Typography
-						sx={{ wordWrap: 'break-word' }}
-						textAlign="center"
-						variant="subtitle1"
+const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => {
+	const [topGames, setTopGames] = useState<Game[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const result = await getTopThreeGamesForPlaylist(playlist.id);
+			setTopGames(result);
+			setIsLoading(false);
+		};
+		fetchData();
+	}, []);
+
+	return (
+		<>
+			<Paper sx={{ p: 4, width: '100%' }}>
+				<Grid container spacing={2}>
+					<Grid
+						item
+						md={5}
+						xs={12}
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'center'
+						}}
 					>
-						{playlist?.description}
-					</Typography>
+						<img
+							src={playlist?.images[0].url}
+							alt="playlist_cover"
+							width="350px"
+							style={{ alignSelf: 'center', marginBottom: '30px' }}
+						/>
+						<Typography textAlign="center" variant="h4">
+							{playlist?.name}
+						</Typography>
+						<Typography
+							sx={{ wordWrap: 'break-word' }}
+							textAlign="center"
+							variant="subtitle1"
+						>
+							{playlist?.description}
+						</Typography>
+					</Grid>
+					<Grid
+						item
+						md={7}
+						xs={12}
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center'
+						}}
+					>
+						<Typography variant="h4">Best Results</Typography>
+						{isLoading ? (
+							<LoadingScreen />
+						) : !topGames.length ? (
+							<>
+								<Typography variant="h6">No recorded results yet.</Typography>
+								<Typography variant="subtitle1">
+									You can set a new record!
+								</Typography>
+							</>
+						) : (
+							topGames.map((game, i) => (
+								<PlaylistLeaderBoardItem key={i} position={i} game={game} />
+							))
+						)}
+						{}
+					</Grid>
 				</Grid>
-				<Grid
-					item
-					md={6}
-					xs={12}
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center'
-					}}
-				>
-					<Typography variant="h4">Matches</Typography>
-				</Grid>
-			</Grid>
-		</Paper>
-		<Button sx={{ px: 8 }} variant="contained" onClick={onGameStart}>
-			<Typography variant="h6">Play</Typography>
-		</Button>
-	</>
-);
+			</Paper>
+			<Button sx={{ px: 8 }} variant="contained" onClick={onGameStart}>
+				<Typography variant="h6">Play</Typography>
+			</Button>
+		</>
+	);
+};
 
 export default GamePreview;

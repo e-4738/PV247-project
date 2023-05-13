@@ -2,13 +2,12 @@ import { Box, Button, Typography } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import { FC } from 'react';
 
-import { PlaylistTrack } from '../hooks/usePlaylistsTracks';
-
 import TrackDetail from './TrackDetail';
+import { GameTrack } from './Quiz';
 
 type Prop = {
 	score: number;
-	tracks: PlaylistTrack[];
+	tracks: GameTrack[];
 };
 
 const GameResult: FC<Prop> = ({ score, tracks }) => (

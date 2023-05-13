@@ -2,7 +2,7 @@ import { Grid, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { FC } from 'react';
 
-import {GameTrack} from "./Quiz.tsx";
+import { GameTrack } from './Quiz.tsx';
 
 type Prop = {
 	position: number;
@@ -10,7 +10,9 @@ type Prop = {
 };
 
 const TrackDetail: FC<Prop> = ({ position, gameTrack }) => (
-	<Paper sx={{ width: '90%', backgroundColor: gameTrack.result ? "green" : "red" }}>
+	<Paper
+		sx={{ width: '90%', backgroundColor: gameTrack.result ? 'green' : 'red' }}
+	>
 		<Grid container sx={{ alignItems: 'center' }}>
 			<Grid
 				item
