@@ -50,24 +50,59 @@ const LeaderBoardItem: FC<Props> = ({
 				p: 2,
 				display: 'space-between',
 				width: '80%',
-				flexDirection: 'row'
+				flexDirection: 'row',
+				justifyContent: 'space-between',
+				alignItems: 'center'
 			}}
 		>
-			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
-				#{position + 1}
-			</Typography>
-			<Link href={playerSpotifyProfileLink} sx={{ display: 'flex' }}>
-				<Avatar src={playerAvatarLink} sx={{ width: 45, height: 45, ml: 2 }} />
-			</Link>
-			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600, ml: 2 }}>
-				{playerName}
-			</Typography>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'row'
+				}}
+			>
+				<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
+					#{position + 1}
+				</Typography>
+				<Link href={playerSpotifyProfileLink}>
+					<Avatar
+						src={playerAvatarLink}
+						sx={{ width: 45, height: 45, ml: 2 }}
+					/>
+				</Link>
+				<Typography
+					variant="body1"
+					sx={{ fontSize: 28, fontWeight: 600, ml: 2 }}
+				>
+					{playerName}
+				</Typography>
+			</Box>
 
 			<Box
 				sx={{
 					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					ml: 8
+				}}
+			>
+				<Typography
+					variant="body1"
+					color="secondary"
+					sx={{ fontSize: 28, fontWeight: 600 }}
+				>
+					{gameScore}/{gameMaxScore}
+				</Typography>
+				<Typography color={grey[500]} variant="overline">
+					Score
+				</Typography>
+			</Box>
+			<Box
+				sx={{
+					display: 'flex',
 					flexDirection: 'row',
-					alignItems: 'flex-center'
+					alignItems: 'center',
+					ml: 6
 				}}
 			>
 				<Box
@@ -75,27 +110,8 @@ const LeaderBoardItem: FC<Props> = ({
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
-						ml: 8
-					}}
-				>
-					<Typography
-						variant="body1"
-						color="secondary"
-						sx={{ fontSize: 28, fontWeight: 600 }}
-					>
-						{gameScore}/{gameMaxScore}
-					</Typography>
-					<Typography color={grey[500]} variant="overline">
-						Score
-					</Typography>
-				</Box>
-
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						ml: 6
+						ml: 6,
+						mr: 2
 					}}
 				>
 					<Link
@@ -110,6 +126,14 @@ const LeaderBoardItem: FC<Props> = ({
 						Playlist
 					</Typography>
 				</Box>
+				{playlist?.images && (
+					<img
+						src={playlist?.images[0]?.url}
+						alt="playlist_cover"
+						width="80px"
+						style={{ alignSelf: 'center' }}
+					/>
+				)}
 			</Box>
 		</Paper>
 	);

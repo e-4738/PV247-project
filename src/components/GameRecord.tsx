@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Avatar, Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import { grey } from '@mui/material/colors';
 
@@ -58,12 +58,14 @@ const GameRecord: FC<Props> = ({ playlistId, gameScore, gameMaxScore }) => {
 						ml: 6
 					}}
 				>
-					<img
-						src={playlist?.images[0].url}
-						alt="playlist_cover"
-						width="80px"
-						style={{ alignSelf: 'center' }}
-					/>
+					{playlist?.images && (
+						<img
+							src={playlist?.images[0]?.url}
+							alt="playlist_cover"
+							width="80px"
+							style={{ alignSelf: 'center' }}
+						/>
+					)}
 				</Box>
 				<Box
 					sx={{
