@@ -22,7 +22,10 @@ type Props = {
 
 const PlayButton: FC<Props> = ({ handleClick, description, variant }) => (
 	<Button variant={variant} onClick={() => handleClick()}>
-		<PlayCircleFilledRoundedIcon fontSize="large" sx={{ pr: 1 }} />
+		<PlayCircleFilledRoundedIcon
+			fontSize="large"
+			sx={{ pr: description ? 1 : 0 }}
+		/>
 		{description}
 	</Button>
 );

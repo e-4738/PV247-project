@@ -48,17 +48,19 @@ const LeaderBoardItem: FC<Props> = ({
 		<Paper
 			sx={{
 				p: 2,
-				display: 'space-between',
-				width: '80%',
+				display: 'flex',
+				width: '90%',
 				flexDirection: 'row',
-				justifyContent: 'space-between',
 				alignItems: 'center'
 			}}
 		>
 			<Box
 				sx={{
 					display: 'flex',
-					flexDirection: 'row'
+					flexDirection: 'row',
+					alignItems: 'center',
+					width: '40%',
+					pl: 2
 				}}
 			>
 				<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
@@ -83,7 +85,7 @@ const LeaderBoardItem: FC<Props> = ({
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					ml: 8
+					width: '30%'
 				}}
 			>
 				<Typography
@@ -97,43 +99,55 @@ const LeaderBoardItem: FC<Props> = ({
 					Score
 				</Typography>
 			</Box>
+
 			<Box
 				sx={{
 					display: 'flex',
 					flexDirection: 'row',
 					alignItems: 'center',
-					ml: 6
+					width: '30%',
+					justifyContent: 'center'
 				}}
 			>
 				<Box
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
-						alignItems: 'center',
-						ml: 6,
-						mr: 2
+						alignItems: 'center'
 					}}
 				>
-					<Link
-						to="/quizzes/$playlistId"
-						params={{
-							playlistId
+					<Paper
+						sx={{
+							backgroundColor: 'black',
+							p: 1.5,
+							display: 'flex',
+							flexDirection: 'row',
+							gap: 2,
+							alignItems: 'center'
 						}}
 					>
-						{playlist?.name}
-					</Link>
+						{playlist?.images && (
+							<img
+								src={playlist?.images[0]?.url}
+								alt="playlist_cover"
+								width="40px"
+								style={{ alignSelf: 'center' }}
+							/>
+						)}
+						<Link
+							to="/quizzes/$playlistId"
+							params={{
+								playlistId
+							}}
+						>
+							<Typography color="primary">{playlist?.name}</Typography>
+						</Link>
+					</Paper>
+
 					<Typography color={grey[500]} variant="overline">
 						Playlist
 					</Typography>
 				</Box>
-				{playlist?.images && (
-					<img
-						src={playlist?.images[0]?.url}
-						alt="playlist_cover"
-						width="80px"
-						style={{ alignSelf: 'center' }}
-					/>
-				)}
 			</Box>
 		</Paper>
 	);
