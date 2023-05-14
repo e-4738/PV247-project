@@ -18,7 +18,7 @@ const Playlist: FC<Props> = ({ playlist }) => (
 			'flexDirection': 'column',
 			'alignItems': 'center',
 			'width': '150px',
-			'boxShadow': '0 0 12px 1px rgba(255, 255, 255, 0.4)',
+			'boxShadow': '0 0 12px 1px rgba(255, 255, 255, 0.2)',
 			'&:hover': {
 				boxShadow: '0 0 12px 4px rgba(214, 92, 242, 1)'
 			}
