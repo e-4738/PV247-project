@@ -80,6 +80,7 @@ const Quiz = () => {
 					tracks[activeQuestion].result = true;
 				}
 			}}
+			trackNo={activeQuestion + 1}
 		/>
 	) : (
 		<GameResult score={score} tracks={tracks} />

@@ -29,7 +29,7 @@ const LeaderBoardItem: FC<Props> = ({
 	const user = useLoggedInUser();
 	const [playlist, setPlaylist] = useState<SpotifyPlaylist>();
 
-	const { data, isLoading } = useQuery({
+	const { data } = useQuery({
 		queryKey: [playlistId],
 		queryFn: () =>
 			fetch(`https://api.spotify.com/v1/playlists/${playlistId}`, {

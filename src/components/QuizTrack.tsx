@@ -1,4 +1,13 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	LinearProgress,
+	Paper,
+	TextField,
+	Typography
+} from '@mui/material';
+import { grey } from '@mui/material/colors';
+import { color } from '@mui/system';
 import { FC, FormEvent } from 'react';
 
 type Prop = {
@@ -6,13 +15,18 @@ type Prop = {
 	albumImage: string;
 	songField: any;
 	seconds: number;
+	trackNo: number;
 };
+
+const normalize = (value: number, min = 0, max = 30) =>
+	((value - min) * 100) / (max - min);
 
 const QuizTrack: FC<Prop> = ({
 	onAnswearSubmit,
 	albumImage,
 	songField,
-	seconds
+	seconds,
+	trackNo
 }) => {
 	console.log('debug');
 
@@ -32,36 +46,60 @@ const QuizTrack: FC<Prop> = ({
 				width: '500px'
 			}}
 		>
-			<Typography variant="h4">Name the song</Typography>
 			<Typography
-				variant="subtitle1"
-				sx={{
-					paddingBottom: '50px'
-				}}
+				variant="h6"
+				fontWeight="bold"
+				color={grey[300]}
+				sx={{ pb: 8 }}
 			>
-				Remaining Time: {seconds}s
+				Track {trackNo}/10
 			</Typography>
 			<img
 				src={albumImage}
 				alt="album_cover"
-				width="400px"
+				width="250px"
 				style={{
-					filter: 'blur(10px)',
+					filter: 'blur(35px)',
 					background: 'linear-gradient(to bottom, transparent, black)',
 					opacity: '0.5'
 				}}
 			/>
+
 			<Box
 				sx={{
 					display: 'flex',
-					flexDirection: 'row',
-					paddingTop: '30px'
+					flexDirection: 'column',
+					alignItems: 'center',
+					paddingTop: '70px',
+					pb: 2
+				}}
+			>
+				<LinearProgress
+					variant="determinate"
+					value={normalize(seconds)}
+					sx={{
+						width: '250px',
+						minWidth: '100%',
+						height: '12px',
+						borderRadius: '30px'
+					}}
+				/>
+				<Typography color={grey[600]} variant="caption" sx={{ pt: 1 }}>
+					Remaining Time: {seconds} sec
+				</Typography>
+			</Box>
+
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					gap: 1
 				}}
 			>
 				<TextField
-					label="song"
-					variant="standard"
-					placeholder=""
+					variant="outlined"
+					label="Track Title"
+					placeholder="Look What You Made Me Do"
 					{...songField.props}
 				/>
 				<Button type="submit" variant="contained">

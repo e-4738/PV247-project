@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
 import { Game, getTopThreeGamesForPlaylist } from '../firebase';
@@ -92,9 +92,6 @@ const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => {
 				description="Start the quiz"
 				variant="contained"
 			/>
-			{/* <Button sx={{ px: 8 }} variant="contained" onClick={onGameStart}>
-				<Typography variant="h6">Play</Typography>
-			</Button> */}
 		</>
 	);
 };

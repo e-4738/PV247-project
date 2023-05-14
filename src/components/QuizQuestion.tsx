@@ -7,15 +7,16 @@ import useField from '../hooks/useField';
 import GuessedTrack from './GuessedTrack';
 import { SkipNextButton } from './MusicButtons';
 import QuizTrack from './QuizTrack';
-import {GameTrack} from "./Quiz.tsx";
+import { GameTrack } from './Quiz.tsx';
 
 type Prop = {
 	gameTrack: GameTrack;
 	onNext: any;
 	onCorrect: any;
+	trackNo: number;
 };
 
-const QuizQuestion: FC<Prop> = ({ gameTrack, onNext, onCorrect }) => {
+const QuizQuestion: FC<Prop> = ({ gameTrack, onNext, onCorrect, trackNo }) => {
 	const song = useField('song', false);
 	const [guessed, setGuessed] = useState(false);
 	const [remainingSeconds, setRemainingSeconds] = useState<number>(30);
@@ -48,6 +49,7 @@ const QuizQuestion: FC<Prop> = ({ gameTrack, onNext, onCorrect }) => {
 					albumImage={gameTrack.track.album.images[0].url}
 					songField={song}
 					seconds={remainingSeconds}
+					trackNo={trackNo}
 				/>
 			) : (
 				<GuessedTrack track={gameTrack} isCorrect={isInputCorrect()} />
@@ -64,7 +66,10 @@ const QuizQuestion: FC<Prop> = ({ gameTrack, onNext, onCorrect }) => {
 			<SkipNextButton
 				handleClick={() => {
 					setGuessed(false);
-					onCorrect(isInputCorrect(), remainingSeconds >= 25 ? 100 : 100 - 3 * (30 - remainingSeconds - 5));
+					onCorrect(
+						isInputCorrect(),
+						remainingSeconds >= 25 ? 100 : 100 - 3 * (30 - remainingSeconds - 5)
+					);
 					song.reset();
 					setRemainingSeconds(30);
 					onNext();
