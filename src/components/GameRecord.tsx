@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Paper, Typography } from '@mui/material';
-import { Link } from '@tanstack/react-router';
 import { grey } from '@mui/material/colors';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+
+import PlaylistThumbnail from './PlaylistThumbnail';
+import ItemScore from './ItemScore';
 
 type Props = {
 	playlistId: string;
@@ -36,77 +38,35 @@ const GameRecord: FC<Props> = ({ playlistId, gameScore, gameMaxScore }) => {
 		<Paper
 			sx={{
 				p: 2,
+				pl: 3,
+				pr: 4,
 				display: 'flex',
-				width: '80%',
+				width: '60%',
 				flexDirection: 'row',
-				justifyContent: 'space-between'
+				justifyContent: 'center',
+				alignItems: 'baseline'
 			}}
 		>
 			<Box
 				sx={{
 					display: 'flex',
-					flexDirection: 'row',
-					alignItems: 'flex-center',
-					justifyContent: 'space-between'
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '60%'
 				}}
 			>
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						ml: 6
-					}}
-				>
-					{playlist?.images && (
-						<img
-							src={playlist?.images[0]?.url}
-							alt="playlist_cover"
-							width="80px"
-							style={{ alignSelf: 'center' }}
-						/>
-					)}
-				</Box>
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						justifyContent: 'center',
-						ml: 6
-					}}
-				>
-					<Link
-						to="/quizzes/$playlistId"
-						params={{
-							playlistId
-						}}
-					>
-						{playlist?.name}
-					</Link>
-					<Typography color={grey[500]} variant="overline">
-						Playlist
-					</Typography>
-				</Box>
+				<PlaylistThumbnail playlistId={playlistId} />
 			</Box>
 			<Box
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
-					ml: 8
+					ml: 8,
+					width: '40%'
 				}}
 			>
-				<Typography
-					variant="body1"
-					color="secondary"
-					sx={{ fontSize: 28, fontWeight: 600 }}
-				>
-					{gameScore}/{gameMaxScore}
-				</Typography>
-				<Typography color={grey[500]} variant="overline">
-					Score
-				</Typography>
+				<ItemScore gameScore={gameScore} gameMaxScore={gameMaxScore} />
 			</Box>
 		</Paper>
 	);

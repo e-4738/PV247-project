@@ -20,7 +20,7 @@ const YourGames = () => {
 	return (
 		<>
 			<Typography variant="h4" textAlign="center">
-				Your past game records
+				Records of your past games
 			</Typography>
 
 			{user && (

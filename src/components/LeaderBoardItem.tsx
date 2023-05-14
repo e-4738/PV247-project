@@ -7,6 +7,9 @@ import { Link } from '@tanstack/react-router';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
 
+import PlaylistThumbnail from './PlaylistThumbnail';
+import ItemScore from './ItemScore';
+
 type Props = {
 	position: number;
 	playerName: string;
@@ -88,16 +91,7 @@ const LeaderBoardItem: FC<Props> = ({
 					width: '30%'
 				}}
 			>
-				<Typography
-					variant="body1"
-					color="secondary"
-					sx={{ fontSize: 28, fontWeight: 600 }}
-				>
-					{gameScore}/{gameMaxScore}
-				</Typography>
-				<Typography color={grey[500]} variant="overline">
-					Score
-				</Typography>
+				<ItemScore gameScore={gameScore} gameMaxScore={gameMaxScore} />
 			</Box>
 
 			<Box
@@ -109,45 +103,7 @@ const LeaderBoardItem: FC<Props> = ({
 					justifyContent: 'center'
 				}}
 			>
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center'
-					}}
-				>
-					<Paper
-						sx={{
-							backgroundColor: 'black',
-							p: 1.5,
-							display: 'flex',
-							flexDirection: 'row',
-							gap: 2,
-							alignItems: 'center'
-						}}
-					>
-						{playlist?.images && (
-							<img
-								src={playlist?.images[0]?.url}
-								alt="playlist_cover"
-								width="40px"
-								style={{ alignSelf: 'center' }}
-							/>
-						)}
-						<Link
-							to="/quizzes/$playlistId"
-							params={{
-								playlistId
-							}}
-						>
-							<Typography color="primary">{playlist?.name}</Typography>
-						</Link>
-					</Paper>
-
-					<Typography color={grey[500]} variant="overline">
-						Playlist
-					</Typography>
-				</Box>
+				<PlaylistThumbnail playlistId={playlistId} />
 			</Box>
 		</Paper>
 	);

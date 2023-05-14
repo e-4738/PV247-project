@@ -7,7 +7,6 @@ import {
 	Typography
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { color } from '@mui/system';
 import { FC, FormEvent } from 'react';
 
 type Prop = {

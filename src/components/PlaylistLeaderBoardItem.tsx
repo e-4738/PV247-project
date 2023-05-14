@@ -4,6 +4,8 @@ import { FC } from 'react';
 
 import { Game } from '../firebase';
 
+import ItemScore from './ItemScore';
+
 type Prop = {
 	position: number;
 	game: Game;
@@ -50,17 +52,7 @@ const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
 				width: '35%'
 			}}
 		>
-			<Typography
-				variant="body1"
-				color="secondary"
-				textAlign="center"
-				sx={{ fontSize: 28, fontWeight: 600 }}
-			>
-				{game.score} / {game.maxScore}
-			</Typography>
-			<Typography color={grey[500]} variant="overline">
-				Score
-			</Typography>
+			<ItemScore gameScore={game.score} gameMaxScore={game.maxScore} />
 		</Box>
 	</Paper>
 );
