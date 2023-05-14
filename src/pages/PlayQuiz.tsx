@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { SetStateAction, useState } from 'react';
+import { borderRadius } from '@mui/system';
 
 import usePageTitle from '../hooks/usePageTitle';
 import Playlist from '../components/Playlist';
@@ -81,10 +82,32 @@ const PlayQuiz = () => {
 					gap: 1
 				}}
 			>
-				<ToggleButtonGroup value={category} exclusive onChange={changeCategory}>
+				<ToggleButtonGroup
+					value={category}
+					exclusive
+					onChange={changeCategory}
+					size="small"
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						gridGap: '12px',
+						padding: '10px'
+					}}
+				>
 					{Object.keys(categoryDescription).map(category => (
-						<ToggleButton key={category} value={category}>
-							<Typography variant="subtitle1">{category}</Typography>
+						<ToggleButton
+							key={category}
+							value={category}
+							sx={{
+								pl: 3,
+								pr: 3,
+								border: '1px solid white !important',
+								borderRadius: '50px !important'
+							}}
+						>
+							<Typography variant="body1" fontWeight="medium">
+								{category}
+							</Typography>
 						</ToggleButton>
 					))}
 				</ToggleButtonGroup>
