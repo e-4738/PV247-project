@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { SetStateAction, useState } from 'react';
-import { borderRadius } from '@mui/system';
+import { grey } from '@mui/material/colors';
 
 import usePageTitle from '../hooks/usePageTitle';
 import Playlist from '../components/Playlist';
@@ -73,7 +73,7 @@ const PlayQuiz = () => {
 
 	return (
 		<>
-			<Typography variant="h1">Pick your playlist</Typography>
+			<Typography variant="h4">Choose a playlist to start the game</Typography>
 			<Box
 				sx={{
 					display: 'flex',
@@ -111,7 +111,7 @@ const PlayQuiz = () => {
 						</ToggleButton>
 					))}
 				</ToggleButtonGroup>
-				<Typography sx={{ m: 2 }} variant="h5">
+				<Typography variant="body1" fontWeight="medium" color={grey[600]}>
 					{categoryDescription[category]}
 				</Typography>
 			</Box>
