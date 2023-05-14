@@ -1,4 +1,4 @@
-import { Avatar, Grid, Link, Typography } from '@mui/material';
+import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { FC } from 'react';
 
@@ -9,16 +9,22 @@ type Prop = {
 	game: Game;
 };
 const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
-	<Grid container sx={{ alignItems: 'center' }}>
-		<Grid
-			item
-			xs={6}
+	<Paper
+		sx={{
+			backgroundColor: grey[900],
+			display: 'flex',
+			flexDirection: 'row',
+			alignItems: 'center',
+			gap: 3
+		}}
+	>
+		<Box
 			sx={{
 				display: 'flex',
 				flexDirection: 'row',
 				alignItems: 'center',
 				p: 2,
-				gap: 3
+				pl: 3
 			}}
 		>
 			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
@@ -33,11 +39,9 @@ const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
 			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600, ml: 2 }}>
 				{game.spotifyDisplayName}
 			</Typography>
-		</Grid>
+		</Box>
 
-		<Grid
-			item
-			xs={6}
+		<Box
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
@@ -55,8 +59,8 @@ const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
 			<Typography color={grey[500]} variant="overline">
 				Score
 			</Typography>
-		</Grid>
-	</Grid>
+		</Box>
+	</Paper>
 );
 
 export default PlaylistLeaderBoardItem;

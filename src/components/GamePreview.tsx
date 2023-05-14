@@ -6,6 +6,7 @@ import { Game, getTopThreeGamesForPlaylist } from '../firebase';
 
 import PlaylistLeaderBoardItem from './PlaylistLeaderBoardItem';
 import LoadingScreen from './LoadingScreen';
+import { PlayButton } from './MusicButtons';
 
 type Prop = {
 	playlist: SpotifyPlaylist;
@@ -52,6 +53,7 @@ const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => {
 							sx={{ wordWrap: 'break-word' }}
 							textAlign="center"
 							variant="subtitle1"
+							fontStyle="italic"
 						>
 							{playlist?.description}
 						</Typography>
@@ -63,8 +65,7 @@ const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => {
 						sx={{
 							display: 'flex',
 							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center'
+							gap: 1
 						}}
 					>
 						<Typography variant="h4">Best Results</Typography>
@@ -86,9 +87,14 @@ const GamePreview: FC<Prop> = ({ playlist, onGameStart }) => {
 					</Grid>
 				</Grid>
 			</Paper>
-			<Button sx={{ px: 8 }} variant="contained" onClick={onGameStart}>
+			<PlayButton
+				handleClick={onGameStart}
+				description="Start the quiz"
+				variant="contained"
+			/>
+			{/* <Button sx={{ px: 8 }} variant="contained" onClick={onGameStart}>
 				<Typography variant="h6">Play</Typography>
-			</Button>
+			</Button> */}
 		</>
 	);
 };
