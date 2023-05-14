@@ -24,7 +24,8 @@ const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
 				flexDirection: 'row',
 				alignItems: 'center',
 				p: 2,
-				pl: 3
+				pl: 3,
+				width: '65%'
 			}}
 		>
 			<Typography variant="body1" sx={{ fontSize: 28, fontWeight: 600 }}>
@@ -45,7 +46,8 @@ const PlaylistLeaderBoardItem: FC<Prop> = ({ position, game }) => (
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'center'
+				alignItems: 'center',
+				width: '35%'
 			}}
 		>
 			<Typography
