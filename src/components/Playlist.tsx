@@ -24,7 +24,7 @@ const Playlist: FC<Props> = ({ playlist }) => (
 			}
 		}}
 	>
-		<img src={playlist.images[0].url} alt="playlist_cover" width="100px" />
+		<img src={playlist.images[0]?.url} alt="playlist_cover" width="100px" />
 		<Typography
 			variant="body1"
 			fontWeight="bold"

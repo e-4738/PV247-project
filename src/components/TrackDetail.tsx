@@ -24,7 +24,7 @@ const TrackDetail: FC<Prop> = ({ position, gameTrack }) => {
 				color={grey[600]}
 				sx={{ fontSize: 18, fontWeight: 600 }}
 			>
-				Tack no. #{position}
+				Track no. #{position}
 			</Typography>
 			<Paper
 				sx={{
