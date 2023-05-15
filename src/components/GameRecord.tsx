@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Box, Paper, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Box, Paper } from '@mui/material';
 
 import { SpotifyPlaylist } from '../pages/PlayQuiz';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -17,7 +16,7 @@ type Props = {
 
 const GameRecord: FC<Props> = ({ playlistId, gameScore, gameMaxScore }) => {
 	const user = useLoggedInUser();
-	const [playlist, setPlaylist] = useState<SpotifyPlaylist>();
+	const [, setPlaylist] = useState<SpotifyPlaylist>();
 
 	const { data } = useQuery({
 		queryKey: [playlistId],
