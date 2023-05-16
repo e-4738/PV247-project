@@ -7,17 +7,16 @@ import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
 import { gamesCollection } from '../firebase';
-
-import GamePreview from './GamePreview';
-import QuizQuestion from './QuizQuestion';
-import GameResult from './GameResult';
-import LoadingScreen from './LoadingScreen';
+import GamePreview from '../components/GamePreview';
+import QuizQuestion from '../components/QuizQuestion';
+import GameResult from '../components/GameResult';
+import LoadingScreen from '../components/LoadingScreen';
 
 type GuessResult = { result: boolean };
 
 export type GameTrack = PlaylistTrack & GuessResult;
 
-const Quiz = () => {
+const Quiz = (): JSX.Element => {
 	usePageTitle('Quiz');
 	const [started, setStarted] = useState<boolean>(false);
 	const [activeQuestion, setActiveQuestion] = useState<number>(0);
@@ -25,7 +24,8 @@ const Quiz = () => {
 
 	const user = useLoggedInUser();
 
-	const { playlistId } = useParams();
+	const { playlistId } = useParams() as { playlistId: string };
+
 	const { data, isLoading } = useQuery({
 		queryKey: [playlistId],
 		queryFn: () =>
@@ -77,7 +77,9 @@ const Quiz = () => {
 			onCorrect={(result: boolean, points: number) => {
 				if (result) {
 					setScore(prev => prev + points);
-					tracks[activeQuestion].result = true;
+					if (tracks) {
+						tracks[activeQuestion].result = true;
+					}
 				}
 			}}
 			trackNo={activeQuestion + 1}

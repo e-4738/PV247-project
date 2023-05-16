@@ -17,7 +17,6 @@ import {
 	useNavigate
 } from '@tanstack/react-router';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { theme } from './theme';
@@ -30,7 +29,7 @@ import ButtonLink from './components/ButtonLink';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Profile from './pages/Profile';
 import { logOutUser } from './utils/logOutUser';
-import Quiz from './components/Quiz';
+import Quiz from './pages/Quiz';
 
 const rootRoute = new RootRoute({
 	component: () => {

@@ -3,8 +3,9 @@ import { Link } from '@tanstack/react-router';
 import { FC } from 'react';
 import { grey } from '@mui/material/colors';
 
+import { GameTrack } from '../pages/Quiz';
+
 import TrackDetail from './TrackDetail';
-import { GameTrack } from './Quiz';
 
 type Prop = {
 	score: number;

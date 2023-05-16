@@ -5,7 +5,8 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ReactAudioPlayer from 'react-audio-player';
 
-import { GameTrack } from './Quiz.tsx';
+import { GameTrack } from '../pages/Quiz.tsx';
+
 import { PauseButton, PlayButton } from './MusicButtons.tsx';
 
 type Prop = {

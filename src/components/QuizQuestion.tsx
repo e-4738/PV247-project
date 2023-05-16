@@ -3,11 +3,11 @@ import { FC, useEffect, useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 
 import useField from '../hooks/useField';
+import { GameTrack } from '../pages/Quiz.tsx';
 
 import GuessedTrack from './GuessedTrack';
 import { SkipNextButton } from './MusicButtons';
 import QuizTrack from './QuizTrack';
-import { GameTrack } from './Quiz.tsx';
 
 type Prop = {
 	gameTrack: GameTrack;
