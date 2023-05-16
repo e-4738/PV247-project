@@ -21,7 +21,7 @@ type Props = {
 };
 
 const PlayButton: FC<Props> = ({ handleClick, description, variant }) => (
-	<Button variant={variant} onClick={() => handleClick()}>
+	<Button size="small" variant={variant} onClick={() => handleClick()}>
 		<PlayCircleFilledRoundedIcon
 			fontSize="large"
 			sx={{ pr: description ? 1 : 0 }}

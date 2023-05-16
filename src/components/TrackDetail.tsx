@@ -1,8 +1,8 @@
 import { Paper, Typography, Box } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { FC, useState } from 'react';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ReactAudioPlayer from 'react-audio-player';
 
 import { GameTrack } from '../pages/Quiz.tsx';
@@ -50,9 +50,9 @@ const TrackDetail: FC<Prop> = ({ position, gameTrack }) => {
 					}}
 				>
 					{gameTrack.result ? (
-						<CheckCircleRoundedIcon fontSize="large" />
+						<CheckRoundedIcon fontSize="large" />
 					) : (
-						<CancelRoundedIcon fontSize="large" />
+						<CloseRoundedIcon fontSize="large" />
 					)}
 				</Box>
 
@@ -90,7 +90,7 @@ const TrackDetail: FC<Prop> = ({ position, gameTrack }) => {
 						whiteSpace="nowrap"
 						textOverflow="ellipsis"
 						overflow="hidden"
-						sx={{ fontSize: 18, fontWeight: 600, ml: 2, pt: 2, pb: 3 }}
+						sx={{ fontSize: 18, fontWeight: 600, pt: 2, pb: 3 }}
 					>
 						{gameTrack.track.name}
 					</Typography>
@@ -106,26 +106,27 @@ const TrackDetail: FC<Prop> = ({ position, gameTrack }) => {
 					>
 						{gameTrack.track.artists[0]?.name}
 					</Typography>
-					<ReactAudioPlayer
-						src={gameTrack.track.preview_url}
-						volume={0.3}
-						onEnded={() => setPlay(false)}
-						muted={!play}
-						autoPlay={false}
-					/>
 					<Box
 						sx={{
 							display: 'flex',
 							flexDirection: 'row',
 							alignItems: 'end',
 							height: '100%',
-							pb: 1
+							pb: 2
 						}}
 					>
 						{play ? (
-							<PlayButton handleClick={() => setPlay(true)} />
+							<>
+								<PauseButton handleClick={() => setPlay(false)} />
+								<ReactAudioPlayer
+									src={gameTrack.track.preview_url}
+									volume={0.3}
+									onEnded={() => setPlay(false)}
+									autoPlay
+								/>
+							</>
 						) : (
-							<PauseButton handleClick={() => setPlay(false)} />
+							<PlayButton handleClick={() => setPlay(true)} />
 						)}
 					</Box>
 				</Paper>

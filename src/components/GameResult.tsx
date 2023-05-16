@@ -15,8 +15,13 @@ type Prop = {
 const GameResult: FC<Prop> = ({ score, tracks }) => (
 	<>
 		<Typography variant="h4">Game Results</Typography>
-		<Typography variant="h6" fontWeight="bold" color={grey[300]}>
-			Score: {score}/{tracks.length * 100}
+		<Typography
+			variant="body1"
+			fontSize={24}
+			fontWeight="bold"
+			color={grey[300]}
+		>
+			Your final score is {score}/{tracks.length * 100}.
 		</Typography>
 		<Box
 			sx={{

@@ -41,6 +41,8 @@ const Playlist: FC<Props> = ({ playlist }) => (
 			}}
 		>
 			<PlayButton
+				variant="outlined"
+				description="Quiz"
 				handleClick={() => {
 					console.log(`play quiz with playlist ${playlist.name}`);
 				}}
