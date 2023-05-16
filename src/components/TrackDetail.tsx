@@ -74,7 +74,7 @@ const TrackDetail: FC<Prop> = ({ position, gameTrack }) => {
 						whiteSpace="nowrap"
 						textOverflow="ellipsis"
 						overflow="hidden"
-						sx={{ fontSize: 12, fontWeight: 700, pb: 3, pt: 1 }}
+						sx={{ fontSize: 12, fontWeight: 700, pb: 4, pt: 1 }}
 					>
 						{gameTrack.track.album.name}
 					</Typography>
