@@ -1,5 +1,7 @@
 import { Avatar, Button, Paper, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -7,6 +9,14 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 const Profile = () => {
 	usePageTitle('My Profile');
 	const user = useLoggedInUser();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!user) {
+			navigate({ to: '/' });
+		}
+	}, []);
+
 	return (
 		<Paper
 			sx={{

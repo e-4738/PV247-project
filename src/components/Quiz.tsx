@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import { addDoc } from 'firebase/firestore';
@@ -7,16 +7,18 @@ import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import usePlaylistsTracks, { PlaylistTrack } from '../hooks/usePlaylistsTracks';
 import { gamesCollection } from '../firebase';
-import GamePreview from '../components/GamePreview';
-import QuizQuestion from '../components/QuizQuestion';
-import GameResult from '../components/GameResult';
-import LoadingScreen from '../components/LoadingScreen';
+
+import GamePreview from './GamePreview';
+import QuizQuestion from './QuizQuestion';
+import GameResult from './GameResult';
+import LoadingScreen from './LoadingScreen';
+import React from 'react';
 
 type GuessResult = { result: boolean };
 
 export type GameTrack = PlaylistTrack & GuessResult;
 
-const Quiz = (): JSX.Element => {
+const Quiz = () => {
 	usePageTitle('Quiz');
 	const [started, setStarted] = useState<boolean>(false);
 	const [activeQuestion, setActiveQuestion] = useState<number>(0);
@@ -24,16 +26,7 @@ const Quiz = (): JSX.Element => {
 
 	const user = useLoggedInUser();
 
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (!user) {
-			navigate({ to: '/' });
-		}
-	}, []);
-
-	const { playlistId } = useParams() as { playlistId: string };
-
+	const { playlistId } = useParams();
 	const { data, isLoading } = useQuery({
 		queryKey: [playlistId],
 		queryFn: () =>
@@ -85,9 +78,7 @@ const Quiz = (): JSX.Element => {
 			onCorrect={(result: boolean, points: number) => {
 				if (result) {
 					setScore(prev => prev + points);
-					if (tracks) {
-						tracks[activeQuestion].result = true;
-					}
+					tracks[activeQuestion].result = true;
 				}
 			}}
 			trackNo={activeQuestion + 1}

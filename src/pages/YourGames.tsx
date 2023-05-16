@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 
 import usePageTitle from '../hooks/usePageTitle';
 import { Game, getUsersGames } from '../firebase';
@@ -10,10 +11,17 @@ const YourGames = () => {
 	usePageTitle('Your Games');
 	const [games, setGames] = useState<Game[]>();
 	const user = useLoggedInUser();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (user) {
 			getUsersGames(user?.spotifyUserId).then(pastGames => setGames(pastGames));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (!user) {
+			navigate({ to: '/' });
 		}
 	}, []);
 

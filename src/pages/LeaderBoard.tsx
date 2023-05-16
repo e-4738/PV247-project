@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 
 import usePageTitle from '../hooks/usePageTitle';
 import LeaderBoardItem from '../components/LeaderBoardItem';
@@ -10,9 +11,16 @@ const LeaderBoard = () => {
 	usePageTitle('Leader Board');
 	const user = useLoggedInUser();
 	const [topGames, setTopGames] = useState<Game[]>([]);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		getTopTenGames().then(games => setTopGames(games));
+	}, []);
+
+	useEffect(() => {
+		if (!user) {
+			navigate({ to: '/' });
+		}
 	}, []);
 
 	return (

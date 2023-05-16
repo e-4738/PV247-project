@@ -5,8 +5,9 @@ import {
 	Typography
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { grey } from '@mui/material/colors';
+import { useNavigate } from '@tanstack/react-router';
 
 import usePageTitle from '../hooks/usePageTitle';
 import Playlist from '../components/Playlist';
@@ -29,6 +30,13 @@ type CategoryDescription = Record<Category, string>;
 const PlayQuiz = () => {
 	usePageTitle('Play');
 	const user = useLoggedInUser();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!user) {
+			navigate({ to: '/' });
+		}
+	}, []);
 
 	const categoryDescription: CategoryDescription = {
 		pop: 'Guess the song from the latest and greatest pop hits from around the world.',
