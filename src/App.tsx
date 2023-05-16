@@ -101,6 +101,12 @@ const playRoute = new Route({
 	component: PlayQuiz
 });
 
+const quizRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: 'quiz/$playlistId',
+	component: Quiz
+});
+
 const yourGamesRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '/yourgames',
@@ -125,21 +131,14 @@ const notFoundRoute = new Route({
 	component: NotFound
 });
 
-// it works like this but not when i make it a child of playRoute ??
-const quizzesRoute = new Route({
-	getParentRoute: () => rootRoute,
-	path: '/quizzes/$playlistId',
-	component: Quiz
-});
-
 const routeTree = rootRoute.addChildren([
 	indexRoute,
 	playRoute,
+	quizRoute,
 	yourGamesRoute,
 	leadeBoardRoute,
 	profileRoute,
-	notFoundRoute,
-	quizzesRoute
+	notFoundRoute
 ]);
 
 const router = new Router({ routeTree });

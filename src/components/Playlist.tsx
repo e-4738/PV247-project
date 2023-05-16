@@ -35,7 +35,7 @@ const Playlist: FC<Props> = ({ playlist }) => (
 		<Box sx={{ flexGrow: 1 }} />
 		<Link
 			style={{ textDecoration: 'none' }}
-			to="/quizzes/$playlistId"
+			to="/quiz/$playlistId"
 			params={{
 				playlistId: playlist.id
 			}}

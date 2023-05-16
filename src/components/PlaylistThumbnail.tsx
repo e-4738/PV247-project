@@ -57,7 +57,7 @@ const PlaylistThumbnail: FC<Props> = ({ playlistId }) => {
 					/>
 				)}
 				<Link
-					to="/quizzes/$playlistId"
+					to="/quiz/$playlistId"
 					params={{
 						playlistId
 					}}
