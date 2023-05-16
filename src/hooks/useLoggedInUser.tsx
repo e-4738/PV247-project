@@ -82,7 +82,9 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 			localStorage.setItem('access_token', newTokens.accessToken ?? '');
 			localStorage.setItem('refresh_token', newTokens.refreshToken ?? '');
 
-			setAccessToken(newTokens.accessToken);
+			if (newTokens.accessToken) {
+				setAccessToken(newTokens.accessToken);
+			}
 			// + the user profile automatically updates, because the acessToken state changes
 		};
 
