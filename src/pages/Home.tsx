@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -29,28 +29,7 @@ const Home = () => {
 					Guess your favourite songs or find new music in a fun way.
 				</Typography>
 			</Box>
-
-			{user ? (
-				<Grid container spacing={2} width="650px">
-					<Grid item xs={12}>
-						<Paper elevation={3} sx={{ p: 2 }}>
-							<Typography variant="h5">Leaderboard</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={12}>
-						<Paper elevation={3} sx={{ p: 2 }}>
-							<Typography variant="h5">Recent matches</Typography>
-						</Paper>
-					</Grid>
-					<Grid item xs={12}>
-						<Paper elevation={3} sx={{ p: 2 }}>
-							<Typography variant="h5">Popular Today</Typography>
-						</Paper>
-					</Grid>
-				</Grid>
-			) : (
-				<LoginWithSpotify />
-			)}
+			{!user && <LoginWithSpotify />}
 		</>
 	);
 };
